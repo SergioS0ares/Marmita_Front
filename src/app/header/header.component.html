@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+  <span>
+    KarlMarket
+  </span>
+
+  <span class="space-buttons"></span>
+  <button *ngIf="! isLoggedIn()" routerLink="/login" mat-raised-button color="primary">
+    Entrar
+  </button>
+  <button *ngIf="isLoggedIn()" (click)="logout()" mat-raised-button color="warn">
+    Sair
+  </button>
+</mat-toolbar>
+
+<mat-toolbar color="primary" *ngIf="isLoggedIn()">
+  <button mat-raised-button color="primary" routerLink="/">Início</button>
+  <button *ngIf="!isAdmin()" mat-raised-button color="primary" routerLink="/cart">Carrinho</button>
+  <button *ngIf="!isAdmin()" mat-raised-button color="primary" routerLink="/myOrders">Meus Pedidos</button>
+  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/addNewProduct">Adicionar Novo Produto</button>
+  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/showProductDetails">Mostrar Detalhes do Produto</button>
+  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/orderInformation">Informações do Pedido</button>
+</mat-toolbar>
