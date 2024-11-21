@@ -1,0 +1,25 @@
+<h1>Register</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="mt-5">
+    <p-floatLabel>
+      <input id="username" pInputText type="text" formControlName="username"/>
+      <label for="username">Username</label>
+    </p-floatLabel>
+  </div>
+  <div class="mt-5">
+    <p-floatLabel>
+      <input id="password" pInputText type="password" formControlName="password"/>
+      <label for="password">Password</label>
+    </p-floatLabel>
+  </div>
+  <div class="mt-5">
+    <p-floatLabel>
+      <input id="confirm_password" pInputText type="password" formControlName="confirmPassword"/>
+      <label for="confirm_password">Confirm Password</label>
+    </p-floatLabel>
+  </div>
+  <div class="mt-5">
+    <p-button label="Submit" type="submit"></p-button>
+  </div>
+</form>
+

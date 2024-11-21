@@ -1,0 +1,6 @@
+<p-menubar [model]="menuService.menuItems">
+  <ng-template pTemplate="end">
+    <p-button *ngIf="!!authService.currentUser()" icon="pi pi-sign-out"
+              [rounded]="true" [outlined]="true" (onClick)="logout()"></p-button>
+  </ng-template>
+</p-menubar>
