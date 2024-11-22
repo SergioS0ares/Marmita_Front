@@ -1,17 +1,17 @@
 import {
-  RouterLink,
-  RouterLinkActive,
-  RouterModule
-} from "./chunk-4ZO5FLYA.js";
-import "./chunk-6QBXMFHE.js";
-import "./chunk-62LO6YFX.js";
-import {
   BaseIcon,
   ConnectedOverlayScrollHandler,
   DomHandler,
   Ripple,
   RippleModule
 } from "./chunk-CQRGAOWZ.js";
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterModule
+} from "./chunk-4ZO5FLYA.js";
+import "./chunk-6QBXMFHE.js";
+import "./chunk-62LO6YFX.js";
 import {
   ObjectUtils,
   PrimeNGConfig,

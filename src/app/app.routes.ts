@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {authGuard} from "./guards/auth.guard";
+import {MapComponent} from "./map/map.component";
 
 export const routes: Routes = [
   {
@@ -19,5 +20,7 @@ export const routes: Routes = [
     path: "profile",
     loadComponent: () => import("./pages/profile/profile.component").then(mod => mod.ProfileComponent),
     canActivate: [authGuard]
-  }
+  },
+  {
+    path: "/map", component: MapComponent}
 ];
