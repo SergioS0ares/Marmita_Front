@@ -1,78 +1,74 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
+import { FormsModule } from '@angular/forms'; // Importe o FormsModule
 
 @Component({
   selector: 'my-app-routeMap',
   standalone: true,
   templateUrl: './routeMap.component.html',
-  styleUrls: ['./routeMap.component.scss']
+  styleUrls: ['./routeMap.component.scss'],
+  imports: [FormsModule] // Adicione FormsModule aos imports
 })
 export class RouteMap implements OnInit {
+  latitude: number = 0; // Inicializa com 0 ou qualquer valor vazio
+  longitude: number = 0; // Inicializa com 0 ou qualquer valor vazio
+  map: any; // Variável para armazenar o mapa
+
   ngOnInit() {
-    const map = L.map('map').setView([16.6869, -49.2648], 6); // Definir o ponto central do mapa (Goiânia)
+    this.initMap(); // Inicializa o mapa ao carregar
+  }
+
+  initMap() {
+    // Cria o mapa com as coordenadas iniciais (0,0)
+    this.map = L.map('map').setView([this.latitude, this.longitude], 6);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    }).addTo(this.map);
 
-    // Adicionando marcador personalizado com a cor vermelha e o texto "Restaurante"
-    const restaurantMarker = L.marker([16.6869, -49.2648], {
-      icon: L.icon({
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png', // Ícone de marcador vermelho padrão
-        iconSize: [25, 41], // Tamanho do ícone
-        iconAnchor: [12, 41], // Posição do âncoras do ícone
-        popupAnchor: [0, -41] // Posição do popup
-      })
-    }).addTo(map)
-      .bindPopup('Restaurante') // Texto "Restaurante" no popup
-      .openPopup();
+    this.updateRoutes(); // Adiciona as rotas iniciais
+  }
 
-    // Definindo as rotas
+  updateMap() {
+    // Atualiza o mapa com as novas coordenadas inseridas pelo usuário
+    if (this.map) {
+      this.map.setView([this.latitude, this.longitude], 6); // Atualiza a posição central do mapa
+      this.updateRoutes(); // Atualiza as rotas
+    }
+  }
+
+  updateRoutes() {
+    // Rota com base nas coordenadas inseridas pelo usuário
     const route1 = [
-      L.latLng(16.6869, -49.2648), // Ponto de origem (Goiânia)
-      L.latLng(10.1815, -48.3340)   // Destino (Palmas)
+      L.latLng(this.latitude, this.longitude), // Ponto de origem
+      L.latLng(-10.1674500, -48.3276600)   // Destino
     ];
 
     const route2 = [
-      L.latLng(16.6869, -49.2648), // Ponto de origem (Goiânia)
-      L.latLng(23.5505, -46.6333)  // Destino (São Paulo)
+      L.latLng(this.latitude, this.longitude), // Ponto de origem
+      L.latLng(-23.5475000, -46.6361100)  // Destino
     ];
 
-    // Rota Goiânia -> Palmas
+    // Remove as rotas anteriores
+    this.map.eachLayer((layer: any) => {
+      if (layer instanceof L.Routing.Control) {
+        this.map.removeLayer(layer);
+      }
+    });
+
+    // Controle da rota Goiânia -> Palmas
     L.Routing.control({
       waypoints: route1,
       routeWhileDragging: true,
       show: false
-    }).addTo(map);
+    }).addTo(this.map);
 
-    // Rota Goiânia -> São Paulo
+    // Controle da rota Goiânia -> São Paulo
     L.Routing.control({
       waypoints: route2,
       routeWhileDragging: true,
       show: false
-    }).addTo(map);
-
-    // Atualizando o mapa quando o usuário altera os valores de latitude e longitude
-    const latitudeInput = document.getElementById('latitudeInput') as HTMLInputElement;
-    const longitudeInput = document.getElementById('longitudeInput') as HTMLInputElement;
-
-    latitudeInput.addEventListener('input', () => {
-      const lat = parseFloat(latitudeInput.value);
-      const lng = parseFloat(longitudeInput.value);
-      if (!isNaN(lat) && !isNaN(lng)) {
-        map.setView([lat, lng], 13);
-        restaurantMarker.setLatLng([lat, lng]);
-      }
-    });
-
-    longitudeInput.addEventListener('input', () => {
-      const lat = parseFloat(latitudeInput.value);
-      const lng = parseFloat(longitudeInput.value);
-      if (!isNaN(lat) && !isNaN(lng)) {
-        map.setView([lat, lng], 13);
-        restaurantMarker.setLatLng([lat, lng]);
-      }
-    });
+    }).addTo(this.map);
   }
 }

@@ -1,10 +1,10 @@
 <div id="panel">
   <h1>Restaurante</h1>
   <label for="latitudeInput">Latitude:</label>
-  <input id="latitudeInput" type="text" placeholder="Latitude" value="16.6869">
+  <input id="latitudeInput" type="number" [(ngModel)]="latitude" placeholder="Latitude" step="0.0001" min="-90" max="90">
 
   <label for="longitudeInput">Longitude:</label>
-  <input id="longitudeInput" type="text" placeholder="Longitude" value="-49.2648">
+  <input id="longitudeInput" type="number" [(ngModel)]="longitude" placeholder="Longitude" step="0.0001" min="-180" max="180">
 </div>
 
-<div id="map" style="height: 550px;  width: 100%;"></div>
+<div id="map" style="height: 550px; width: 100%;"></div>
