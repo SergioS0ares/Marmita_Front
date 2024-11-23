@@ -1,6 +1,6 @@
 import {
   ObjectUtils
-} from "./chunk-LF3LQ4O5.js";
+} from "./chunk-LWZ2NIQK.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,7 +14,7 @@ import {
   ɵɵdefineComponent,
   ɵɵprojection,
   ɵɵprojectionDef
-} from "./chunk-F7QFJHO6.js";
+} from "./chunk-OUISMEY4.js";
 
 // ../../node_modules/primeng/fesm2022/primeng-dom.mjs
 var DomHandler = class _DomHandler {
@@ -746,4 +746,4 @@ export {
   ConnectedOverlayScrollHandler,
   BaseIcon
 };
-//# sourceMappingURL=chunk-3NGKCQPY.js.map
+//# sourceMappingURL=chunk-IROXZPPJ.js.map

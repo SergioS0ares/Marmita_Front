@@ -1,6 +1,6 @@
 import {
   BaseIcon
-} from "./chunk-3NGKCQPY.js";
+} from "./chunk-IROXZPPJ.js";
 import {
   Component,
   setClassMetadata,
@@ -14,7 +14,7 @@ import {
   ɵɵelementStart,
   ɵɵgetInheritedFactory,
   ɵɵnamespaceSVG
-} from "./chunk-F7QFJHO6.js";
+} from "./chunk-OUISMEY4.js";
 
 // ../../node_modules/primeng/fesm2022/primeng-icons-check.mjs
 var CheckIcon = class _CheckIcon extends BaseIcon {
@@ -69,4 +69,4 @@ var CheckIcon = class _CheckIcon extends BaseIcon {
 export {
   CheckIcon
 };
-//# sourceMappingURL=chunk-KUMNL6JV.js.map
+//# sourceMappingURL=chunk-TLMS3YWR.js.map

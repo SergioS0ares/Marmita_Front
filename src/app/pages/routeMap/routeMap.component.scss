@@ -1,0 +1,31 @@
+#map {
+  height: 100%; /* Faz o mapa ocupar toda a altura disponível */
+  width: 100%; /* Faz o mapa ocupar 75% da largura da tela */
+  float: right;
+}
+
+#panel {
+  position: absolute;
+  top: 11%;
+  left: 5%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 250px;
+}
+
+#panel h1 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+#panel input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

@@ -2,16 +2,16 @@ import {
   BaseIcon,
   ConnectedOverlayScrollHandler,
   DomHandler
-} from "./chunk-3NGKCQPY.js";
+} from "./chunk-IROXZPPJ.js";
 import {
   PrimeNGConfig,
   UniqueComponentId,
   zindexutils
-} from "./chunk-LF3LQ4O5.js";
+} from "./chunk-LWZ2NIQK.js";
 import {
   CommonModule,
   isPlatformBrowser
-} from "./chunk-7HM6MZP4.js";
+} from "./chunk-HGGMUDK7.js";
 import {
   Component,
   Directive,
@@ -26,7 +26,6 @@ import {
   Renderer2,
   TemplateRef,
   ViewContainerRef,
-  __spreadValues,
   booleanAttribute,
   numberAttribute,
   setClassMetadata,
@@ -48,7 +47,10 @@ import {
   ɵɵlistener,
   ɵɵnamespaceSVG,
   ɵɵresolveDocument
-} from "./chunk-F7QFJHO6.js";
+} from "./chunk-OUISMEY4.js";
+import {
+  __spreadValues
+} from "./chunk-X6JV76XL.js";
 
 // ../../node_modules/primeng/fesm2022/primeng-icons-angledown.mjs
 var AngleDownIcon = class _AngleDownIcon extends BaseIcon {
@@ -972,4 +974,4 @@ export {
   Tooltip,
   TooltipModule
 };
-//# sourceMappingURL=chunk-ZCXFWLUD.js.map
+//# sourceMappingURL=chunk-PYJKNIOY.js.map
