@@ -19,7 +19,7 @@ import {MessageHelperService} from "../../services/message-helper.service";
     ButtonModule
   ],
   templateUrl: './register.component.html',
-  styles: ``
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
   formBuilder = inject(FormBuilder);

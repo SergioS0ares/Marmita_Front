@@ -11,13 +11,18 @@ export const routes: Routes = [
     loadComponent: () => import("./pages/register/register.component").then(mod => mod.RegisterComponent),
   },
   {
+    path: "dashboard",
+    loadComponent: () => import("./pages/dashboard/dashboard.component").then(mod => mod.DashboardComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: "",
     loadComponent: () => import("./pages/dashboard/dashboard.component").then(mod => mod.DashboardComponent),
     canActivate: [authGuard]
   },
   {
-    path: "profile",
-    loadComponent: () => import("./pages/profile/profile.component").then(mod => mod.ProfileComponent),
+    path: "routeMap",
+    loadComponent: () => import("./pages/routeMap/routeMap.component").then(mod => mod.RouteMap),
     canActivate: [authGuard]
   }
 ];

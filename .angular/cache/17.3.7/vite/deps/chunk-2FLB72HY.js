@@ -1,6 +1,6 @@
 import {
   DOCUMENT
-} from "./chunk-GWYMHQYR.js";
+} from "./chunk-NCJSJ6YE.js";
 import {
   ANIMATION_MODULE_TYPE,
   Inject,
@@ -12,9 +12,9 @@ import {
   setClassMetadata,
   ɵɵdefineInjectable,
   ɵɵinject
-} from "./chunk-P5Y2QPUT.js";
+} from "./chunk-I5XZJESX.js";
 
-// node_modules/@angular/animations/fesm2022/animations.mjs
+// ../../../../node_modules/@angular/animations/fesm2022/animations.mjs
 var AnimationMetadataType;
 (function(AnimationMetadataType2) {
   AnimationMetadataType2[AnimationMetadataType2["State"] = 0] = "State";
@@ -77,17 +77,31 @@ function transition(stateChangeExpr, steps, options = null) {
     options
   };
 }
+function animation(steps, options = null) {
+  return {
+    type: AnimationMetadataType.Reference,
+    animation: steps,
+    options
+  };
+}
 function animateChild(options = null) {
   return {
     type: AnimationMetadataType.AnimateChild,
     options
   };
 }
-function query(selector, animation, options = null) {
+function useAnimation(animation2, options = null) {
+  return {
+    type: AnimationMetadataType.AnimateRef,
+    animation: animation2,
+    options
+  };
+}
+function query(selector, animation2, options = null) {
   return {
     type: AnimationMetadataType.Query,
     selector,
-    animation,
+    animation: animation2,
     options
   };
 }
@@ -133,10 +147,10 @@ var _BrowserAnimationBuilder = class _BrowserAnimationBuilder extends AnimationB
       throw new RuntimeError(3600, (typeof ngDevMode === "undefined" || ngDevMode) && "Angular detected that the `AnimationBuilder` was injected, but animation support was not enabled. Please make sure that you enable animations in your application by calling `provideAnimations()` or `provideAnimationsAsync()` function.");
     }
   }
-  build(animation) {
+  build(animation2) {
     const id = this._nextAnimationId;
     this._nextAnimationId++;
-    const entry = Array.isArray(animation) ? sequence(animation) : animation;
+    const entry = Array.isArray(animation2) ? sequence(animation2) : animation2;
     issueAnimationCommand(this._renderer, null, id, "register", [entry]);
     return new BrowserAnimationFactory(id, this._renderer);
   }
@@ -480,7 +494,9 @@ export {
   style,
   state,
   transition,
+  animation,
   animateChild,
+  useAnimation,
   query,
   NoopAnimationPlayer,
   AnimationGroupPlayer,
@@ -495,4 +511,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-MJKV4OMJ.js.map
+//# sourceMappingURL=chunk-2FLB72HY.js.map

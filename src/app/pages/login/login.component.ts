@@ -19,7 +19,7 @@ import {MessageHelperService} from "../../services/message-helper.service";
     ButtonModule,
   ],
   templateUrl: './login.component.html',
-  styles: ``,
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
 

@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Altura total da janela */
+  background-color: #f4f4f4; /* Cor de fundo suave */
+}
+
+.form-container {
+  background: #fff; /* Fundo branco para o formulário */
+  padding: 2rem; /* Espaçamento interno */
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  width: 100%;
+  max-width: 400px; /* Largura máxima */
+  text-align: center; /* Centraliza o conteúdo no formulário */
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 1.5rem;
+  color: #333; /* Cor do texto */
+}
+
+.mt-5 {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza os elementos dentro do container */
+}
+
+p-button {
+  width: auto; /* Ajusta a largura do botão ao conteúdo */
+}

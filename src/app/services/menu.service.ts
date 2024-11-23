@@ -27,14 +27,15 @@ export class MenuService {
       this.menuItems = [
         {
           label: "Dashboard",
-          routerLink: "",
+          routerLink: "dashboard",
           icon: "pi pi-home"
         },
         {
-          label: "Profile",
-          routerLink: "profile",
-          icon: "pi pi-user"
+          label: "Entregas", // Nome do componente
+          routerLink: "routeMap", // O link para a rota do componente
+          icon: "pi pi-map" // Ícone do mapa
         }
+
       ]
     }
   }

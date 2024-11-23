@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'my-app-profile',
+  selector: 'my-app-routeMap',
   standalone: true,
   imports: [],
-  templateUrl: './profile.component.html',
+  templateUrl: './routeMap.component.html',
   styles: ``
 })
-export class ProfileComponent {
+export class RouteMap {
 
 }
