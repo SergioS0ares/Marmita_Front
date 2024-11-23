@@ -3,15 +3,22 @@ import {
   AngleRightIcon,
   Tooltip,
   TooltipModule
-} from "./chunk-7SVBUG5E.js";
+} from "./chunk-ZCXFWLUD.js";
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterModule
+} from "./chunk-2IOUMAO5.js";
+import "./chunk-SADENNKM.js";
+import "./chunk-TXPE7NRF.js";
 import {
   Ripple,
   RippleModule
-} from "./chunk-URRBBXFX.js";
+} from "./chunk-D7LVDGHN.js";
 import {
   BaseIcon,
   DomHandler
-} from "./chunk-IEFLWEQP.js";
+} from "./chunk-3NGKCQPY.js";
 import {
   ObjectUtils,
   PrimeNGConfig,
@@ -19,14 +26,7 @@ import {
   SharedModule,
   UniqueComponentId,
   zindexutils
-} from "./chunk-EYXTVGSK.js";
-import {
-  RouterLink,
-  RouterLinkActive,
-  RouterModule
-} from "./chunk-WDFM3N5N.js";
-import "./chunk-QF2JTPE4.js";
-import "./chunk-3POWPFK5.js";
+} from "./chunk-LF3LQ4O5.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -36,7 +36,7 @@ import {
   NgStyle,
   NgTemplateOutlet,
   isPlatformBrowser
-} from "./chunk-NCJSJ6YE.js";
+} from "./chunk-7HM6MZP4.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -109,9 +109,9 @@ import {
   ɵɵtextInterpolate,
   ɵɵtextInterpolate1,
   ɵɵviewQuery
-} from "./chunk-I5XZJESX.js";
+} from "./chunk-F7QFJHO6.js";
 
-// ../../../../node_modules/primeng/fesm2022/primeng-icons-bars.mjs
+// ../../node_modules/primeng/fesm2022/primeng-icons-bars.mjs
 var BarsIcon = class _BarsIcon extends BaseIcon {
   static ɵfac = /* @__PURE__ */ (() => {
     let ɵBarsIcon_BaseFactory;
@@ -163,7 +163,7 @@ var BarsIcon = class _BarsIcon extends BaseIcon {
   }], null, null);
 })();
 
-// ../../../../node_modules/primeng/fesm2022/primeng-menubar.mjs
+// ../../node_modules/primeng/fesm2022/primeng-menubar.mjs
 var _c0 = ["menubar"];
 var _c1 = (a0, a1) => ({
   "p-submenu-list": a0,

@@ -18,7 +18,7 @@ export class MenuService {
           icon: "pi pi-sign-in"
         },
         {
-          label: "Register",
+          label: "Cadastro",
           routerLink: "auth/register",
           icon: "pi pi-user-plus"
         },
