@@ -1,0 +1,1 @@
+import{ab as i,bb as r,da as o,qb as a,ub as p}from"./chunk-ZJB6LXJZ.js";var m=(()=>{let e=class e{};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=o({type:e,selectors:[["my-app-profile"]],standalone:!0,features:[p],decls:2,vars:0,template:function(n,f){n&1&&(i(0,"p"),a(1,"profile works!"),r())}});let t=e;return t})();export{m as ProfileComponent};

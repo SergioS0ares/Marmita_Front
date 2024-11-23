@@ -4,14 +4,7 @@ import {
   DomHandler,
   Ripple,
   RippleModule
-} from "./chunk-CQRGAOWZ.js";
-import {
-  RouterLink,
-  RouterLinkActive,
-  RouterModule
-} from "./chunk-4ZO5FLYA.js";
-import "./chunk-6QBXMFHE.js";
-import "./chunk-62LO6YFX.js";
+} from "./chunk-36GMEMRA.js";
 import {
   ObjectUtils,
   PrimeNGConfig,
@@ -19,7 +12,14 @@ import {
   SharedModule,
   UniqueComponentId,
   zindexutils
-} from "./chunk-ODKYUQEE.js";
+} from "./chunk-VIF5P6XL.js";
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterModule
+} from "./chunk-GFP4XFGJ.js";
+import "./chunk-E4B46QIU.js";
+import "./chunk-SLTS7V4K.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -29,7 +29,7 @@ import {
   NgStyle,
   NgTemplateOutlet,
   isPlatformBrowser
-} from "./chunk-GWYMHQYR.js";
+} from "./chunk-CLKXTNSF.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -53,8 +53,6 @@ import {
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation$1,
-  __spreadProps,
-  __spreadValues,
   booleanAttribute,
   debounce,
   effect,
@@ -110,7 +108,11 @@ import {
   ɵɵtextInterpolate,
   ɵɵtextInterpolate1,
   ɵɵviewQuery
-} from "./chunk-P5Y2QPUT.js";
+} from "./chunk-LKMAP4U4.js";
+import {
+  __spreadProps,
+  __spreadValues
+} from "./chunk-WKYGNSYM.js";
 
 // node_modules/primeng/fesm2022/primeng-icons-angledown.mjs
 var AngleDownIcon = class _AngleDownIcon extends BaseIcon {

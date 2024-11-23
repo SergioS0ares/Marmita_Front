@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import {authGuard} from "./guards/auth.guard";
-import {MapComponent} from "./map/map.component";
+import {MapComponent} from "./pages/map/map.component";
 
 export const routes: Routes = [
   {
@@ -22,5 +22,5 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
-    path: "/map", component: MapComponent}
+    path: "map", component: MapComponent}
 ];
