@@ -3,5 +3,7 @@ Interface do usuário para o sistema de entrega de marmitas. Desenvolvido com An
 
 npm install
 
-npm install ngx-mask --save
+npm install leaflet
+npm install @asymmetrik/ngx-leaflet
+
 
