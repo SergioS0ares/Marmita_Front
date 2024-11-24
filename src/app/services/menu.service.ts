@@ -26,9 +26,9 @@ export class MenuService {
     } else {
       this.menuItems = [
         {
-          label: "Dashboard",
-          routerLink: "dashboard",
-          icon: "pi pi-home"
+          label: "Cliente",
+          routerLink: "cliente",
+          icon: "pi pi-user"
         },
         {
           label: "Entregas", // Nome do componente

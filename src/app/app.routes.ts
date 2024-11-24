@@ -11,13 +11,13 @@ export const routes: Routes = [
     loadComponent: () => import("./pages/register/register.component").then(mod => mod.RegisterComponent),
   },
   {
-    path: "dashboard",
-    loadComponent: () => import("./pages/dashboard/dashboard.component").then(mod => mod.DashboardComponent),
+    path: "cliente",
+    loadComponent: () => import("./pages/cliente/cliente.component").then(mod => mod.ClienteComponent),
     canActivate: [authGuard]
   },
   {
     path: "",
-    loadComponent: () => import("./pages/dashboard/dashboard.component").then(mod => mod.DashboardComponent),
+    loadComponent: () => import("./pages/cliente/cliente.component").then(mod => mod.ClienteComponent),
     canActivate: [authGuard]
   },
   {

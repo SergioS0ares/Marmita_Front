@@ -11,64 +11,67 @@ import { FormsModule } from '@angular/forms'; // Importe o FormsModule
   imports: [FormsModule] // Adicione FormsModule aos imports
 })
 export class RouteMap implements OnInit {
-  latitude: number = 0; // Inicializa com 0 ou qualquer valor vazio
-  longitude: number = 0; // Inicializa com 0 ou qualquer valor vazio
-  map: any; // Variável para armazenar o mapa
+  latitude: string = ''; // Tipo string para capturar coordenadas do input
+  longitude: string = ''; // Tipo string para capturar coordenadas do input
+  map: any;
+  marker: L.Marker | null = null; // Variável para armazenar o marcador atual
+  routingControl: L.Routing.Control | null = null; // Variável para armazenar o controle de rota atual
 
   ngOnInit() {
-    this.initMap(); // Inicializa o mapa ao carregar
+    this.initMap();
   }
 
   initMap() {
-    // Cria o mapa com as coordenadas iniciais (0,0)
-    this.map = L.map('map').setView([this.latitude, this.longitude], 6);
+    // Inicializa o mapa com as coordenadas iniciais (caso não tenha valores)
+    const lat = parseFloat(this.latitude) || 0;
+    const lon = parseFloat(this.longitude) || 0;
+
+    this.map = L.map('map').setView([lat, lon], 6);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
 
-    this.updateRoutes(); // Adiciona as rotas iniciais
+    this.updateRoutes();
   }
 
   updateMap() {
-    // Atualiza o mapa com as novas coordenadas inseridas pelo usuário
+    const lat = parseFloat(this.latitude) || 0;
+    const lon = parseFloat(this.longitude) || 0;
+
     if (this.map) {
-      this.map.setView([this.latitude, this.longitude], 6); // Atualiza a posição central do mapa
-      this.updateRoutes(); // Atualiza as rotas
+      this.map.setView([lat, lon], 6);
+      this.updateRoutes();
     }
+
+    // Atualiza o marcador
+    this.updateMarker(lat, lon);
   }
 
   updateRoutes() {
-    // Rota com base nas coordenadas inseridas pelo usuário
-    const route1 = [
-      L.latLng(this.latitude, this.longitude), // Ponto de origem
-      L.latLng(-10.1674500, -48.3276600)   // Destino
-    ];
+    // Remove o controle de rota anterior, se houver
+    if (this.routingControl) {
+      this.map.removeControl(this.routingControl);
+    }
 
-    const route2 = [
-      L.latLng(this.latitude, this.longitude), // Ponto de origem
-      L.latLng(-23.5475000, -46.6361100)  // Destino
-    ];
-
-    // Remove as rotas anteriores
-    this.map.eachLayer((layer: any) => {
-      if (layer instanceof L.Routing.Control) {
-        this.map.removeLayer(layer);
-      }
-    });
-
-    // Controle da rota Goiânia -> Palmas
-    L.Routing.control({
-      waypoints: route1,
+    // Define a rota com base nas coordenadas inseridas
+    this.routingControl = L.Routing.control({
+      waypoints: [
+        L.latLng(parseFloat(this.latitude), parseFloat(this.longitude)), // Converte para number
+        L.latLng(-10.1674500, -48.3276600) // Destino
+      ],
       routeWhileDragging: true,
-      show: false
+      show: false // Não mostra o painel
     }).addTo(this.map);
+  }
 
-    // Controle da rota Goiânia -> São Paulo
-    L.Routing.control({
-      waypoints: route2,
-      routeWhileDragging: true,
-      show: false
-    }).addTo(this.map);
+  updateMarker(lat: number, lon: number) {
+    // Se já houver um marcador, remove ele antes de adicionar um novo
+    if (this.marker) {
+      this.map.removeLayer(this.marker);
+    }
+
+    // Cria um novo marcador com as coordenadas fornecidas
+    this.marker = L.marker([lat, lon]).addTo(this.map);
   }
 }

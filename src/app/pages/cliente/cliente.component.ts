@@ -8,17 +8,17 @@ import { InputTextModule } from 'primeng/inputtext';
 
 
 @Component({
-  selector: 'my-app-dashboard',
+  selector: 'my-app-cliente',
   standalone: true,
   imports: [DialogModule, ButtonModule, TableModule, FormsModule, InputMaskModule, InputTextModule],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  templateUrl: './cliente.component.html',
+  styleUrls: ['./cliente.component.scss']
 })
-export class DashboardComponent {
+export class ClienteComponent {
   data = [
-    { id: 1, name: 'John', phone: '(62)99915-8956', latitude: '40.7128', longitude: '-74.0060', addressDescription: 'New York, NY' },
-    { id: 2, name: 'Jane', phone: '(62)99915-8956', latitude: '34.0522', longitude: '-118.2437', addressDescription: 'Los Angeles, CA' },
-    { id: 3, name: 'Mark', phone: '(62)99915-8956', latitude: '41.8781', longitude: '-87.6298', addressDescription: 'Chicago, IL' }
+    { id: 1, name: 'John', phone: '(62)99915-8956', latitude: '-12.9711100', longitude: '-38.5108300', addressDescription: 'SALVADOR' },
+    { id: 2, name: 'Jane', phone: '(62)99915-8956', latitude: '-10.1674500', longitude: '-48.3276600', addressDescription: 'PALMAS' },
+    { id: 3, name: 'Mark', phone: '(62)99915-8956', latitude: '-15.5961100', longitude: '-56.0966700', addressDescription: 'Cuiabá ' }
   ];
   displayDialog = false;
   newItem = { id: 0, name: '', phone: '', latitude: '', longitude: '', addressDescription: '' };

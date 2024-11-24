@@ -23,7 +23,7 @@ export class LoginService {
     let nextUrl = this.routerService.previousUrl() ?? "/";
     this.router.navigateByUrl(nextUrl).then();
     this.menuService.setMenu()
-    this.messageHelperService.sendSuccessMessage("Logged in successfully!", "")
+    this.messageHelperService.sendSuccessMessage("Conectado com sucesso!", "")
   }
 }
 
