@@ -6,6 +6,8 @@
       <th>Latitude</th>
       <th>Longitude</th>
       <th>Descrição do Endereço</th>
+      <th>Sugestão de Horário</th>  <!-- Coluna para mostrar o horário -->
+      <th>Quantidade de Marmitas</th>
       <th>
         Ações
         <button pButton icon="pi pi-plus" (click)="openDialog()" class="p-button-rounded p-button-success" style="float: right;"></button>
@@ -15,10 +17,12 @@
   <ng-template pTemplate="body" let-item>
     <tr>
       <td>{{ item.name }}</td>
-      <td>{{ item.phone }}</td> <!-- Corrigido para 'phone' -->
-      <td>{{ item.latitude }}</td> <!-- Corrigido para 'latitude' -->
-      <td>{{ item.longitude }}</td> <!-- Corrigido para 'longitude' -->
-      <td>{{ item.addressDescription }}</td> <!-- Corrigido para 'addressDescription' -->
+      <td>{{ item.phone }}</td>
+      <td>{{ item.latitude }}</td>
+      <td>{{ item.longitude }}</td>
+      <td>{{ item.addressDescription }}</td>
+      <td>{{ item.suggestedTime?.value }}</td>
+      <td>{{ item.marmitasQuantity || 1 }}</td>
       <td>
         <div class="button-group">
           <button pButton icon="pi pi-pencil" (click)="editItem(item)" class="p-button-rounded p-button-info"></button>
@@ -29,8 +33,11 @@
   </ng-template>
 </p-table>
 
+
+
 <!-- Dialog to add an item -->
-<p-dialog header="Add Item" [(visible)]="displayDialog" [style]="{width: '400px'}">
+<!-- Formulário de Adição -->
+<p-dialog header="Adicionar Item" [(visible)]="displayDialog" [style]="{width: '400px'}">
   <form (ngSubmit)="addItem()" #itemForm="ngForm">
     <div class="p-fluid">
       <div class="p-field">
@@ -63,9 +70,28 @@
         <div *ngIf="addressDescription.invalid && addressDescription.touched" class="p-error">Descrição do Endereço é obrigatória.</div>
       </div>
       <br/>
+      <!-- Sugestão de Horário com p-dropdown -->
+      <div class="p-field">
+        <label for="suggestedTime">Sugestão de Horário</label>
+        <p-dropdown
+        [(ngModel)]="newItem.suggestedTime"
+        [options]="times"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Selecione o horário">
+      </p-dropdown>
+      </div>
+      <br/>
+      <!-- Quantidade de Marmitas -->
+      <div class="p-field">
+        <label for="marmitasQuantity">Quantidade de Marmitas</label>
+        <input id="marmitasQuantity" pInputText [(ngModel)]="newItem.marmitasQuantity" name="marmitasQuantity" type="number" required #marmitasQuantity="ngModel" min="0" />
+        <div *ngIf="marmitasQuantity.invalid && marmitasQuantity.touched" class="p-error">Quantidade de marmitas não pode ser negativa.</div>
+      </div>
+      <br/>
       <p-footer style="display: flex; flex-direction: column; gap: 10px;">
-        <button pButton label="Add" type="submit" [disabled]="itemForm.invalid" style="background-color: #22c55e; color: white; border: none;"></button>
-        <button pButton label="Cancel" icon="pi pi-times" (click)="displayDialog = false" style="background-color: #ef4444; color: white; border: none;"></button>
+        <button pButton label="Adicionar" type="submit" [disabled]="itemForm.invalid" style="background-color: #22c55e; color: white; border: none;"></button>
+        <button pButton label="Cancelar" icon="pi pi-times" (click)="displayDialog = false" style="background-color: #ef4444; color: white; border: none;"></button>
       </p-footer>
     </div>
   </form>

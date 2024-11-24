@@ -1,6 +1,6 @@
 import {
   BaseIcon
-} from "./chunk-IROXZPPJ.js";
+} from "./chunk-SJNBZHAO.js";
 import {
   Component,
   setClassMetadata,
@@ -14,9 +14,9 @@ import {
   ɵɵelementStart,
   ɵɵgetInheritedFactory,
   ɵɵnamespaceSVG
-} from "./chunk-OUISMEY4.js";
+} from "./chunk-INCWAIXT.js";
 
-// ../../node_modules/primeng/fesm2022/primeng-icons-check.mjs
+// node_modules/primeng/fesm2022/primeng-icons-check.mjs
 var CheckIcon = class _CheckIcon extends BaseIcon {
   static ɵfac = /* @__PURE__ */ (() => {
     let ɵCheckIcon_BaseFactory;
@@ -69,4 +69,4 @@ var CheckIcon = class _CheckIcon extends BaseIcon {
 export {
   CheckIcon
 };
-//# sourceMappingURL=chunk-TLMS3YWR.js.map
+//# sourceMappingURL=chunk-5BEZID7Y.js.map
