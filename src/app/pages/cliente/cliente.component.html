@@ -42,31 +42,31 @@
     <div class="p-fluid">
       <div class="p-field">
         <label for="name">Nome</label>
-        <input id="name" pInputText [(ngModel)]="newItem.name" name="name" required #name="ngModel" />
+        <input id="name" pInputText [(ngModel)]="cliente.name" name="name" required #name="ngModel" />
         <div *ngIf="name.invalid && name.touched" class="p-error">Nome é obrigatório.</div>
       </div>
       <br/>
       <div class="p-field">
         <label for="phone">Telefone</label>
-        <p-inputMask mask="(99) 99999-9999" [(ngModel)]="newItem.phone" name="phone" required #phone="ngModel"></p-inputMask>
+        <p-inputMask mask="(99) 99999-9999" [(ngModel)]="cliente.phone" name="phone" required #phone="ngModel"></p-inputMask>
         <div *ngIf="phone.invalid && phone.touched" class="p-error">Telefone é obrigatório.</div>
       </div>
       <br/>
       <div class="p-field">
         <label for="latitude">Latitude</label>
-        <input pInputText [(ngModel)]="newItem.latitude" name="latitude" required #latitude="ngModel"/>
+        <input pInputText [(ngModel)]="cliente.latitude" name="latitude" required #latitude="ngModel"/>
         <div *ngIf="latitude.invalid && latitude.touched" class="p-error">Latitude é obrigatória.</div>
       </div>
       <br/>
       <div class="p-field">
         <label for="longitude">Longitude</label>
-        <input pInputText [(ngModel)]="newItem.longitude" name="longitude" required #longitude="ngModel"/>
+        <input pInputText [(ngModel)]="cliente.longitude" name="longitude" required #longitude="ngModel"/>
         <div *ngIf="longitude.invalid && longitude.touched" class="p-error">Longitude é obrigatória.</div>
       </div>
       <br/>
       <div class="p-field">
         <label for="addressDescription">Descrição do Endereço</label>
-        <input id="addressDescription" pInputText [(ngModel)]="newItem.addressDescription" name="addressDescription" required #addressDescription="ngModel" />
+        <input id="addressDescription" pInputText [(ngModel)]="cliente.addressDescription" name="addressDescription" required #addressDescription="ngModel" />
         <div *ngIf="addressDescription.invalid && addressDescription.touched" class="p-error">Descrição do Endereço é obrigatória.</div>
       </div>
       <br/>
@@ -74,7 +74,7 @@
       <div class="p-field">
         <label for="suggestedTime">Sugestão de Horário</label>
         <p-dropdown
-        [(ngModel)]="newItem.suggestedTime"
+        [(ngModel)]="cliente.suggestedTime"
         [options]="times"
         optionLabel="label"
         optionValue="value"
@@ -85,7 +85,7 @@
       <!-- Quantidade de Marmitas -->
       <div class="p-field">
         <label for="marmitasQuantity">Quantidade de Marmitas</label>
-        <input id="marmitasQuantity" pInputText [(ngModel)]="newItem.marmitasQuantity" name="marmitasQuantity" type="number" required #marmitasQuantity="ngModel" min="0" />
+        <input id="marmitasQuantity" pInputText [(ngModel)]="cliente.marmitasQuantity" name="marmitasQuantity" type="number" required #marmitasQuantity="ngModel" min="0" />
         <div *ngIf="marmitasQuantity.invalid && marmitasQuantity.touched" class="p-error">Quantidade de marmitas não pode ser negativa.</div>
       </div>
       <br/>
