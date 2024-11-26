@@ -38,7 +38,7 @@
 <!-- Dialog to add an item -->
 <!-- Formulário de Adição -->
 <p-dialog header="Adicionar Item" [(visible)]="displayDialog" [style]="{width: '400px'}">
-  <form (ngSubmit)="addItem()" #itemForm="ngForm">
+  <form (ngSubmit)="onSubmit(itemForm)" #itemForm="ngForm">
     <div class="p-fluid">
       <div class="p-field">
         <label for="name">Nome</label>
@@ -49,37 +49,33 @@
       <div class="p-field">
         <label for="phone">Telefone</label>
         <p-inputMask mask="(99) 99999-9999" [(ngModel)]="cliente.phone" name="phone" required #phone="ngModel"></p-inputMask>
-        <div *ngIf="phone.invalid && phone.touched" class="p-error">Telefone é obrigatório.</div>
+        <div id="phone" *ngIf="phone.invalid && phone.touched" class="p-error">Telefone é obrigatório.</div>
       </div>
       <br/>
       <div class="p-field">
         <label for="latitude">Latitude</label>
         <input pInputText [(ngModel)]="cliente.latitude" name="latitude" required #latitude="ngModel"/>
-        <div *ngIf="latitude.invalid && latitude.touched" class="p-error">Latitude é obrigatória.</div>
+        <div id="latitude" *ngIf="latitude.invalid && latitude.touched" class="p-error">Latitude é obrigatória.</div>
       </div>
       <br/>
       <div class="p-field">
         <label for="longitude">Longitude</label>
         <input pInputText [(ngModel)]="cliente.longitude" name="longitude" required #longitude="ngModel"/>
-        <div *ngIf="longitude.invalid && longitude.touched" class="p-error">Longitude é obrigatória.</div>
+        <div id="longitude" *ngIf="longitude.invalid && longitude.touched" class="p-error">Longitude é obrigatória.</div>
       </div>
       <br/>
       <div class="p-field">
         <label for="addressDescription">Descrição do Endereço</label>
         <input id="addressDescription" pInputText [(ngModel)]="cliente.addressDescription" name="addressDescription" required #addressDescription="ngModel" />
-        <div *ngIf="addressDescription.invalid && addressDescription.touched" class="p-error">Descrição do Endereço é obrigatória.</div>
+        <div  *ngIf="addressDescription.invalid && addressDescription.touched" class="p-error">Descrição do Endereço é obrigatória.</div>
       </div>
       <br/>
       <!-- Sugestão de Horário com p-dropdown -->
       <div class="p-field">
         <label for="suggestedTime">Sugestão de Horário</label>
-        <p-dropdown
-        [(ngModel)]="cliente.suggestedTime"
-        [options]="times"
-        optionLabel="label"
-        optionValue="value"
-        placeholder="Selecione o horário">
-      </p-dropdown>
+        <select id="suggestedTime" pDropdown [(ngModel)]="cliente.suggestedTime" name="suggestedTime" required>
+          <option *ngFor="let time of times" [value]="time.value">{{ time.label }}</option>
+        </select>
       </div>
       <br/>
       <!-- Quantidade de Marmitas -->

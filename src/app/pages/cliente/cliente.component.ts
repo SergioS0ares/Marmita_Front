@@ -51,58 +51,75 @@ export class ClienteComponent {
 
   constructor(private _clienteService: ClientService) {}
 
-  openDialog() {
+  openDialog(item?: any) {
     this.newItem = { id: this.data.length + 1, name: '', phone: '', latitude: '', longitude: '', addressDescription: '', suggestedTime: this.times[0], marmitasQuantity: 0 }; // Garantindo que 'suggestedTime' seja um objeto da lista
     this.displayDialog = true;
+    if (item) {
+      // Caso esteja editando, copia os dados para o objeto cliente
+      this.editingItem = item;
+      this.cliente = { ...item };
+    } else {
+      // Reseta o objeto para um novo cliente
+      this.editingItem = null;
+      this.cliente = {
+        name: '',
+        phone: '',
+        latitude: '',
+        longitude: '',
+        addressDescription: '',
+        suggestedTime: { label: '08:00', value: '08:00' }, // Valor inicial
+        marmitasQuantity: 0,
+      };
+    }
     this.editingItem = null;
   }
 
-  addItem() {
-
-    if (!this.newItem.suggestedTime || !this.newItem.suggestedTime.value) {
-      alert('Por favor, selecione um horário válido.');
-      return;
-    }
-    console.log("Adicionar item: ", this.newItem.suggestedTime);
-
-    // Validação do horário e quantidade
-    if (this.newItem.marmitasQuantity < 0) {
-      alert('A quantidade de marmitas não pode ser negativa');
-      return;
-    }
-
-    if (this.editingItem) {
-      // Atualiza item existente
-      this.editingItem.name = this.newItem.name;
-      this.editingItem.phone = this.newItem.phone;
-      this.editingItem.latitude = this.newItem.latitude;
-      this.editingItem.longitude = this.newItem.longitude;
-      this.editingItem.addressDescription = this.newItem.addressDescription;
-      this.editingItem.suggestedTime = this.newItem.suggestedTime;
-      this.editingItem.marmitasQuantity = this.newItem.marmitasQuantity;
-    } else {
-      // Adiciona novo item
-      const newDataItem = { ...this.newItem };
-      this.data.push(newDataItem);
-      const newCliente: Cliente = {
-
-        name: newDataItem.name,
-        phone: newDataItem.phone,
-        latitude: newDataItem.latitude,
-        longitude: newDataItem.longitude,
-        addressDescription: newDataItem.addressDescription,
-        marmitasQuantity: newDataItem.marmitasQuantity,
-        suggestedTime: { ...newDataItem.suggestedTime }, // Mantém o formato { label, value }
-      };
-      this.clientes.push(newCliente);
-    }
-
-
-    // Log para verificar os dados após a adição ou edição
-    console.log(this.data);
-
-    this.displayDialog = false;
-  }
+  // addItem() {
+  //
+  //   if (!this.newItem.suggestedTime || !this.newItem.suggestedTime.value) {
+  //     alert('Por favor, selecione um horário válido.');
+  //     return;
+  //   }
+  //   console.log("Adicionar item: ", this.newItem.suggestedTime);
+  //
+  //   // Validação do horário e quantidade
+  //   if (this.newItem.marmitasQuantity < 0) {
+  //     alert('A quantidade de marmitas não pode ser negativa');
+  //     return;
+  //   }
+  //
+  //   if (this.editingItem) {
+  //     // Atualiza item existente
+  //     this.editingItem.name = this.newItem.name;
+  //     this.editingItem.phone = this.newItem.phone;
+  //     this.editingItem.latitude = this.newItem.latitude;
+  //     this.editingItem.longitude = this.newItem.longitude;
+  //     this.editingItem.addressDescription = this.newItem.addressDescription;
+  //     this.editingItem.suggestedTime = this.newItem.suggestedTime;
+  //     this.editingItem.marmitasQuantity = this.newItem.marmitasQuantity;
+  //   } else {
+  //     // Adiciona novo item
+  //     const newDataItem = { ...this.newItem };
+  //     this.data.push(newDataItem);
+  //     const newCliente: Cliente = {
+  //
+  //       name: newDataItem.name,
+  //       phone: newDataItem.phone,
+  //       latitude: newDataItem.latitude,
+  //       longitude: newDataItem.longitude,
+  //       addressDescription: newDataItem.addressDescription,
+  //       marmitasQuantity: newDataItem.marmitasQuantity,
+  //       suggestedTime: { ...newDataItem.suggestedTime }, // Mantém o formato { label, value }
+  //     };
+  //     this.clientes.push(newCliente);
+  //   }
+  //
+  //
+  //   // Log para verificar os dados após a adição ou edição
+  //   console.log(this.data);
+  //
+  //   this.displayDialog = false;
+  // }
 
   editItem(item: any) {
     this.newItem = { ...item };
@@ -125,9 +142,9 @@ export class ClienteComponent {
         form.reset();
 
         // Atualiza a lista de clientes
-        this._clienteService.getClientes().subscribe((clientes ) => {
-          this.clientes  = clientes ; // Atualiza a tabela de clientes
-        });
+        // this._clienteService.getClientes().subscribe((clientes ) => {
+        //   this.clientes  = clientes ; // Atualiza a tabela de clientes
+        // });
       },
       error: (error) => {
         console.error('Erro ao salvar o cliente:', error);
@@ -136,5 +153,6 @@ export class ClienteComponent {
     });
   }
 
+  protected readonly NgForm = NgForm;
 }
 
