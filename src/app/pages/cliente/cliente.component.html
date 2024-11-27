@@ -71,12 +71,19 @@
       </div>
       <br/>
       <!-- Sugestão de Horário com p-dropdown -->
-      <div class="p-field">
-        <label for="suggestedTime">Sugestão de Horário</label>
-        <select id="suggestedTime" pDropdown [(ngModel)]="cliente.suggestedTime" name="suggestedTime" required>
-          <option *ngFor="let time of times" [value]="time.value">{{ time.label }}</option>
-        </select>
-      </div>
+      <<div class="p-field">
+      <label for="suggestedTime">Sugestão de Horário</label>
+      <p-dropdown
+        id="suggestedTime"
+        [(ngModel)]="cliente.suggestedTime"
+        [options]="times"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Selecione o horário"
+        name="suggestedTime"
+        required>
+      </p-dropdown>
+    </div>
       <br/>
       <!-- Quantidade de Marmitas -->
       <div class="p-field">

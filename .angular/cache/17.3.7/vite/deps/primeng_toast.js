@@ -5,13 +5,6 @@ import {
   TimesIcon
 } from "./chunk-QDOHMOHL.js";
 import {
-  Ripple,
-  RippleModule
-} from "./chunk-WEFYXGCX.js";
-import {
-  BaseIcon
-} from "./chunk-PRVV2IOA.js";
-import {
   animate,
   animateChild,
   query,
@@ -20,6 +13,13 @@ import {
   transition,
   trigger
 } from "./chunk-QZMA2GF3.js";
+import {
+  Ripple,
+  RippleModule
+} from "./chunk-WEFYXGCX.js";
+import {
+  BaseIcon
+} from "./chunk-PRVV2IOA.js";
 import {
   MessageService,
   ObjectUtils,
