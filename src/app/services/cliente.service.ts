@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {Cliente} from "../models/cliente.interface";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
-  private baseUrl = 'http://localhost:8080/clientes';
+  private baseUrl = 'http://localhost:8080/cliente';
 
   private clients = [
     { id: 1, name: 'John', phone: '(62)99915-8956', latitude: '-12.9711100', longitude: '-38.5108300', addressDescription: 'SALVADOR' },
@@ -23,6 +24,6 @@ export class ClientService {
   salvarCliente(cliente: any): Observable<any> {
 
 
-    return this.http.post<any>(this.baseUrl, cliente);
+    return this.http.post<Cliente>(this.baseUrl, cliente);
   }
 }
