@@ -1,20 +1,32 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
-  private clients = [
-    { id: 1, name: 'John', phone: '(62)99915-8956', latitude: '-12.9711100', longitude: '-38.5108300', addressDescription: 'SALVADOR' },
-    { id: 2, name: 'Jane', phone: '(62)99915-8956', latitude: '-10.1674500', longitude: '-48.3276600', addressDescription: 'PALMAS' },
-    { id: 3, name: 'Mark', phone: '(62)99915-8956', latitude: '-15.5961100', longitude: '-56.0966700', addressDescription: 'Cuiabá' }
-  ];
+  private apiUrl = 'http://localhost:8080/client'; // Substitua pela URL correta do seu backend
 
-  getClients() {
-    return this.clients;
+  constructor(private http: HttpClient) {}
+
+  // Método para obter todos os clientes
+  getClients(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/getAllclients`);
   }
 
-  addClient(client: any) {
-    this.clients.push(client);
+  // Método para salvar todos os clientes de uma vez
+  saveAllClients(clients: any[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}/saveAllClients`, clients); // O token será adicionado automaticamente pelo interceptor
+  }
+
+  // Método para adicionar um cliente
+  addClient(client: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/saveClient`, client); // O token será adicionado automaticamente pelo interceptor
+  }
+
+  // Método para deletar um cliente
+  deleteClient(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/deleteClient/${id}`); // O token será adicionado automaticamente pelo interceptor
   }
 }

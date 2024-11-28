@@ -6,84 +6,85 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { ClientService } from '../../services/cliente.service';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @Component({
   selector: 'my-app-cliente',
   standalone: true,
-  imports: [DialogModule, ButtonModule, TableModule, FormsModule, InputMaskModule, InputTextModule, DropdownModule],
-
+  imports: [DialogModule, ButtonModule, TableModule, FormsModule, InputMaskModule, InputTextModule, DropdownModule,AutoCompleteModule],
   templateUrl: './cliente.component.html',
   styleUrls: ['./cliente.component.scss']
 })
 export class ClienteComponent {
   // Dados iniciais
   data = [
-    { id: 1, name: 'John', phone: '(62)99915-8956', latitude: '-12.9711100', longitude: '-38.5108300', addressDescription: 'SALVADOR', marmitasQuantity: 5, suggestedTime: { label: '10:00 - 14:00', value: '10:00 - 14:00' } },
-    { id: 2, name: 'Jane', phone: '(62)99915-8956', latitude: '-10.1674500', longitude: '-48.3276600', addressDescription: 'PALMAS', marmitasQuantity: 3, suggestedTime: { label: '11:00 - 12:00', value: '11:00 - 12:00' } },
-    { id: 3, name: 'Mark', phone: '(62)99915-8956', latitude: '-15.5961100', longitude: '-56.0966700', addressDescription: 'Cuiabá', marmitasQuantity: 8, suggestedTime: { label: '12:00 - 13:00', value: '12:00 - 13:00' } }
+    { nome: 'John', telefone: '(62)99915-8956', latitude: '-12.9711100', longitude: '-38.5108300', descricaoEndereco: 'SALVADOR', quantPedido: 5, sujestH: '10:00 - 14:00' },
+    {  nome: 'Jane', telefone: '(62)99915-8956', latitude: '-10.1674500', longitude: '-48.3276600', descricaoEndereco: 'PALMAS', quantPedido: 3, sujestH: '11:00 - 12:00'},
+    {  nome: 'Mark', telefone: '(62)99915-8956', latitude: '-15.5961100', longitude: '-56.0966700', descricaoEndereco: 'Cuiabá', quantPedido: 8, sujestH: '12:00 - 13:00' }
   ];
 
-  times = [
-    { label: '10:00 - 11:00', value: '10:00 - 11:00' },
-    { label: '11:00 - 12:00', value: '11:00 - 12:00' },
-    { label: '12:00 - 13:00', value: '12:00 - 13:00' },
-    { label: '13:00 - 14:00', value: '13:00 - 14:00' },
-    { label: '10:00 - 14:00', value: '10:00 - 14:00' }
-  ];
 
   displayDialog = false;
-  newItem = { id: 0, name: '', phone: '', latitude: '', longitude: '', addressDescription: '', suggestedTime: this.times[0], marmitasQuantity: 0 }; // Inicializa com o primeiro item da lista de times
+  newItem = { nome: '', telefone: '', latitude: '', longitude: '', descricaoEndereco: '', sujestH: '', quantPedido: 0 }; // Inicializa com o primeiro item da lista de times
   editingItem: any = null;
 
+  constructor(private clienteService: ClientService) {} // Injetando o ClientService
+
   openDialog() {
-    this.newItem = { id: this.data.length + 1, name: '', phone: '', latitude: '', longitude: '', addressDescription: '', suggestedTime: this.times[0], marmitasQuantity: 0 }; // Garantindo que 'suggestedTime' seja um objeto da lista
+    this.newItem = {nome: '', telefone: '', latitude: '', longitude: '', descricaoEndereco: '', sujestH: '', quantPedido: 0 }; // Garantindo que 'sujestH' seja um objeto da lista
     this.displayDialog = true;
     this.editingItem = null;
   }
 
+  filteredTimes: any[] = []; // Inicialize a propriedade para armazenar os horários filtrados
+
   addItem() {
 
-    if (!this.newItem.suggestedTime || !this.newItem.suggestedTime.value) {
-      alert('Por favor, selecione um horário válido.');
-      return;
-    }
-    console.log("Adicionar item: ", this.newItem.suggestedTime);
 
     // Validação do horário e quantidade
-    if (this.newItem.marmitasQuantity < 0) {
+    if (this.newItem.quantPedido < 0) {
       alert('A quantidade de marmitas não pode ser negativa');
       return;
     }
 
     if (this.editingItem) {
       // Atualiza item existente
-      this.editingItem.name = this.newItem.name;
-      this.editingItem.phone = this.newItem.phone;
-      this.editingItem.latitude = this.newItem.latitude;
-      this.editingItem.longitude = this.newItem.longitude;
-      this.editingItem.addressDescription = this.newItem.addressDescription;
-      this.editingItem.suggestedTime = this.newItem.suggestedTime;
-      this.editingItem.marmitasQuantity = this.newItem.marmitasQuantity;
+      Object.assign(this.editingItem, this.newItem);
     } else {
       // Adiciona novo item
       this.data.push({ ...this.newItem });
     }
 
-    // Log para verificar os dados após a adição ou edição
-    console.log(this.data);
+    // Console.log para verificar os dados antes de salvar
+    console.log('Lista de clientes atualizada:', this.data);
+
+    // Chama o backend para salvar todos os clientes
+    this.saveAllClients();
 
     this.displayDialog = false;
   }
 
+
+
   editItem(item: any) {
     this.newItem = { ...item };
-    this.newItem.suggestedTime = { ...item.suggestedTime };
+    this.newItem.sujestH = { ...item.sujestH };
     this.editingItem = item;
     this.displayDialog = true;
   }
 
-  deleteItem(id: number) {
-    this.data = this.data.filter(item => item.id !== id);
+
+
+  // Função para salvar todos os clientes no backend
+  saveAllClients() {
+    this.clienteService.saveAllClients(this.data).subscribe(
+      (response) => {
+        console.log('Todos os clientes salvos com sucesso!', response);
+      },
+      (error) => {
+        console.error('Erro ao salvar clientes:', error);
+      }
+    );
   }
 }
-
