@@ -8,26 +8,37 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ClientService } from '../../services/cliente.service';
+import { ConfirmationService } from 'primeng/api';  // Importação para o serviço de confirmação
+import { ConfirmDialogModule } from 'primeng/confirmdialog';  // Módulo de diálogo de confirmação
 
 @Component({
   selector: 'my-app-cliente',
   standalone: true,
-  imports: [DialogModule, ButtonModule, TableModule, FormsModule, InputMaskModule, InputTextModule, DropdownModule, AutoCompleteModule],
+  imports: [
+    DialogModule,
+    ButtonModule,
+    TableModule,
+    FormsModule,
+    InputMaskModule,
+    InputTextModule,
+    DropdownModule,
+    AutoCompleteModule,
+    ConfirmDialogModule  // Adiciona o módulo de confirmação
+  ],
   templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.scss']
+  styleUrls: ['./cliente.component.scss'],
+  providers: [ConfirmationService]  // Fornece o serviço de confirmação
 })
 export class ClienteComponent implements OnInit {
-  data: any[] = []; // Array para armazenar os clientes
+  data: any[] = [];
   displayDialog = false;
   newItem = { nome: '', telefone: '', latitude: '', longitude: '', descricaoEndereco: '', sujestH: '', quantPedido: 0 };
   editingItem: any = null;
 
-  filteredTimes: any[] = []; // Inicialize a propriedade para armazenar os horários filtrados
-
-  constructor(private clienteService: ClientService) {} // Injetando o ClientService
+  constructor(private clienteService: ClientService, private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
-    this.loadClients(); // Carrega os clientes ao iniciar a tela
+    this.loadClients();
   }
 
   openDialog() {
@@ -43,15 +54,12 @@ export class ClienteComponent implements OnInit {
     }
 
     if (this.editingItem) {
-      // Atualiza item existente
       Object.assign(this.editingItem, this.newItem);
     } else {
-      // Adiciona novo item
       this.data.push({ ...this.newItem });
     }
 
-    console.log('Lista de clientes atualizada:', this.data);
-    this.saveAllClients(); // Salva todos os clientes
+    this.saveAllClients();
     this.displayDialog = false;
   }
 
@@ -61,12 +69,10 @@ export class ClienteComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  // Função para buscar todos os clientes do backend
   loadClients() {
     this.clienteService.getClients().subscribe(
       (clients) => {
         this.data = clients;
-        console.log('Clientes carregados com sucesso:', this.data);
       },
       (error) => {
         console.error('Erro ao carregar clientes:', error);
@@ -74,7 +80,32 @@ export class ClienteComponent implements OnInit {
     );
   }
 
-  // Função para salvar todos os clientes no backend
+  confirmDelete(id: string) {
+    this.confirmationService.confirm({
+      message: 'Tem certeza de que deseja excluir este cliente?',
+      header: 'Confirmação de Exclusão',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteClient(id);
+      },
+      reject: () => {
+        console.log('Exclusão cancelada.');
+      }
+    });
+  }
+
+  deleteClient(id: string) {
+    this.clienteService.deleteClient(id).subscribe(
+      () => {
+        this.loadClients();
+      },
+      (error) => {
+        console.error('Erro ao deletar cliente:', error);
+        this.loadClients();
+      }
+    );
+  }
+
   saveAllClients() {
     this.clienteService.saveAllClients(this.data).subscribe(
       (response) => {

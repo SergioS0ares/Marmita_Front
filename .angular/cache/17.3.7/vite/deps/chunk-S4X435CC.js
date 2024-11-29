@@ -1,9 +1,9 @@
 import {
   BaseIcon
-} from "./chunk-NW7Z6QFF.js";
+} from "./chunk-WAIO5GAB.js";
 import {
   UniqueComponentId
-} from "./chunk-RFII6MOS.js";
+} from "./chunk-LJKDXXTH.js";
 import {
   Component,
   setClassMetadata,
@@ -19,9 +19,9 @@ import {
   ɵɵgetInheritedFactory,
   ɵɵnamespaceSVG,
   ɵɵproperty
-} from "./chunk-EGDIE5C4.js";
+} from "./chunk-MCVHFUGR.js";
 
-// ../../../../node_modules/primeng/fesm2022/primeng-icons-spinner.mjs
+// node_modules/primeng/fesm2022/primeng-icons-spinner.mjs
 var SpinnerIcon = class _SpinnerIcon extends BaseIcon {
   pathId;
   ngOnInit() {
@@ -92,4 +92,4 @@ var SpinnerIcon = class _SpinnerIcon extends BaseIcon {
 export {
   SpinnerIcon
 };
-//# sourceMappingURL=chunk-PRV6EEVW.js.map
+//# sourceMappingURL=chunk-S4X435CC.js.map

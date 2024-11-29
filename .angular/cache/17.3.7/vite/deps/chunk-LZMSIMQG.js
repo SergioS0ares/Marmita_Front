@@ -1,4 +1,4 @@
-// ../../../../node_modules/primeng/fesm2022/primeng-dom.mjs
+// node_modules/primeng/fesm2022/primeng-dom.mjs
 var DomHandler = class _DomHandler {
   static zindex = 1e3;
   static calculatedScrollbarWidth = null;
@@ -651,4 +651,4 @@ export {
   DomHandler,
   ConnectedOverlayScrollHandler
 };
-//# sourceMappingURL=chunk-RF3QJ5QA.js.map
+//# sourceMappingURL=chunk-LZMSIMQG.js.map

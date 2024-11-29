@@ -25,8 +25,7 @@ export class ClientService {
     return this.http.post(`${this.apiUrl}/saveClient`, client); // O token será adicionado automaticamente pelo interceptor
   }
 
-  // Método para deletar um cliente
-  deleteClient(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/deleteClient/${id}`); // O token será adicionado automaticamente pelo interceptor
-  }
+  deleteClient(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/deleteClient/${id}`);
+}
 }

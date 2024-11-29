@@ -1,6 +1,6 @@
 import {
   BaseIcon
-} from "./chunk-NW7Z6QFF.js";
+} from "./chunk-WAIO5GAB.js";
 import {
   Component,
   setClassMetadata,
@@ -14,9 +14,9 @@ import {
   ɵɵelementStart,
   ɵɵgetInheritedFactory,
   ɵɵnamespaceSVG
-} from "./chunk-EGDIE5C4.js";
+} from "./chunk-MCVHFUGR.js";
 
-// ../../../../node_modules/primeng/fesm2022/primeng-icons-angledown.mjs
+// node_modules/primeng/fesm2022/primeng-icons-angledown.mjs
 var AngleDownIcon = class _AngleDownIcon extends BaseIcon {
   static ɵfac = /* @__PURE__ */ (() => {
     let ɵAngleDownIcon_BaseFactory;
@@ -66,7 +66,7 @@ var AngleDownIcon = class _AngleDownIcon extends BaseIcon {
   }], null, null);
 })();
 
-// ../../../../node_modules/primeng/fesm2022/primeng-icons-angleright.mjs
+// node_modules/primeng/fesm2022/primeng-icons-angleright.mjs
 var AngleRightIcon = class _AngleRightIcon extends BaseIcon {
   static ɵfac = /* @__PURE__ */ (() => {
     let ɵAngleRightIcon_BaseFactory;
@@ -120,4 +120,4 @@ export {
   AngleDownIcon,
   AngleRightIcon
 };
-//# sourceMappingURL=chunk-6VELF2J3.js.map
+//# sourceMappingURL=chunk-R5OYQTM3.js.map

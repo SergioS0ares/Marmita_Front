@@ -2,7 +2,7 @@ import {
   __require
 } from "./chunk-X6JV76XL.js";
 
-// ../../../../node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js
+// node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.js
 (/* @__PURE__ */ function() {
   function r(e, n, t) {
     function o(i2, f) {

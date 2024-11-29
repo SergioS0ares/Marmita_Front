@@ -1,22 +1,22 @@
 import {
   SpinnerIcon
-} from "./chunk-PRV6EEVW.js";
+} from "./chunk-S4X435CC.js";
 import {
   AutoFocus,
   AutoFocusModule
-} from "./chunk-6DMHOGBL.js";
+} from "./chunk-BP5U5XCK.js";
 import {
   Ripple,
   RippleModule
-} from "./chunk-4JQD5ZHT.js";
+} from "./chunk-6VGIEZJM.js";
 import {
   DomHandler
-} from "./chunk-RF3QJ5QA.js";
+} from "./chunk-LZMSIMQG.js";
 import {
   ObjectUtils,
   PrimeTemplate,
   SharedModule
-} from "./chunk-RFII6MOS.js";
+} from "./chunk-LJKDXXTH.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -24,7 +24,7 @@ import {
   NgIf,
   NgStyle,
   NgTemplateOutlet
-} from "./chunk-DTGPGUWK.js";
+} from "./chunk-IMWCRIJK.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -68,9 +68,9 @@ import {
   ɵɵtemplate,
   ɵɵtext,
   ɵɵtextInterpolate
-} from "./chunk-EGDIE5C4.js";
+} from "./chunk-MCVHFUGR.js";
 
-// ../../../../node_modules/primeng/fesm2022/primeng-button.mjs
+// node_modules/primeng/fesm2022/primeng-button.mjs
 var _c0 = ["*"];
 function Button_ng_container_2_Template(rf, ctx) {
   if (rf & 1) {
@@ -1043,4 +1043,4 @@ export {
   Button,
   ButtonModule
 };
-//# sourceMappingURL=chunk-BVPWMFIF.js.map
+//# sourceMappingURL=chunk-VLCHLDTM.js.map

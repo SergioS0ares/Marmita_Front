@@ -1,14 +1,14 @@
 import {
   DomHandler
-} from "./chunk-RF3QJ5QA.js";
+} from "./chunk-LZMSIMQG.js";
 import {
   PrimeNGConfig
-} from "./chunk-RFII6MOS.js";
+} from "./chunk-LJKDXXTH.js";
 import {
   CommonModule,
   DOCUMENT,
   isPlatformBrowser
-} from "./chunk-DTGPGUWK.js";
+} from "./chunk-IMWCRIJK.js";
 import {
   Directive,
   ElementRef,
@@ -23,9 +23,9 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵdirectiveInject
-} from "./chunk-EGDIE5C4.js";
+} from "./chunk-MCVHFUGR.js";
 
-// ../../../../node_modules/primeng/fesm2022/primeng-ripple.mjs
+// node_modules/primeng/fesm2022/primeng-ripple.mjs
 var Ripple = class _Ripple {
   document;
   platformId;
@@ -196,4 +196,4 @@ export {
   Ripple,
   RippleModule
 };
-//# sourceMappingURL=chunk-4JQD5ZHT.js.map
+//# sourceMappingURL=chunk-6VGIEZJM.js.map
