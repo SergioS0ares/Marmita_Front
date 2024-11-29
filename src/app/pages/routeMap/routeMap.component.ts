@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { FormsModule } from '@angular/forms';
-import { ClientService } from '../../services/cliente.service'; // Importe seu serviço de clientes
+import { ClientService } from '../../services/cliente.service'; // Importando o serviço para acessar os destinos
 
 @Component({
   selector: 'my-app-routeMap',
@@ -12,52 +12,60 @@ import { ClientService } from '../../services/cliente.service'; // Importe seu s
   imports: [FormsModule],
 })
 export class RouteMap implements OnInit {
-  latitude: string = '';
-  longitude: string = '';
+  latitude: string = ''; // Ponto de origem (latitude do usuário)
+  longitude: string = ''; // Ponto de origem (longitude do usuário)
   map: L.Map | null = null;
   marker: L.Marker | null = null;
   routingControl: L.Routing.Control | null = null;
+  clients: any[] = []; // Armazena os destinos do banco de dados
 
   constructor(private clientService: ClientService) {}
 
   ngOnInit() {
-    console.log('Inicializando o mapa...');
     this.initMap();
-    console.log('Carregando clientes...');
-    this.loadClients();
+    this.loadClients(); // Carrega os destinos ao inicializar o mapa
   }
 
   initMap() {
+    // Ponto de origem do usuário
     const lat = parseFloat(this.latitude) || 0;
     const lon = parseFloat(this.longitude) || 0;
-    console.log(`Inicializando mapa com coordenadas: [${lat}, ${lon}]`);
 
+    // Inicializa o mapa com as coordenadas de origem
     this.map = L.map('map').setView([lat, lon], 6);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(this.map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
+  }
+
+  updateRoutes(clients: any[]) {
+    // Remove os controles de rota antigos
+    if (this.routingControl) {
+      this.map?.removeControl(this.routingControl);
+    }
+
+    // Para cada cliente, cria uma rota da origem para o destino
+    clients.forEach((client) => {
+      const waypoint = L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
+
+      // Cria a rota da origem para o destino
+      const newRoutingControl = L.Routing.control({
+        waypoints: [
+          L.latLng(parseFloat(this.latitude), parseFloat(this.longitude)), // Ponto de origem
+          waypoint // Destino
+        ],
+        routeWhileDragging: true,
+        show: false // Não mostra o painel
+      }).addTo(this.map!);
+    });
   }
 
   loadClients() {
     this.clientService.getClients().subscribe(
       (clients) => {
-        console.log('Clientes recebidos do backend:', clients);
-
-        const waypoints = clients.map((client) => {
-          console.log(`Processando cliente: ${client.nome}, Coordenadas: [${client.latitude}, ${client.longitude}]`);
-          return L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
-        });
-
-        // Adiciona o ponto de início fornecido pelo usuário
-        if (this.latitude && this.longitude) {
-          const userLatLng = L.latLng(parseFloat(this.latitude), parseFloat(this.longitude));
-          console.log('Adicionando ponto inicial fornecido pelo usuário:', userLatLng);
-          waypoints.unshift(userLatLng); // Garante que o ponto inicial do usuário seja o primeiro
+        if (clients.length >= 1) {
+          // Passa os clientes para o método de atualização das rotas
+          this.updateRoutes(clients);
+          this.addMarkers(clients); // Adiciona os marcadores para todos os clientes
         }
-
-        console.log('Waypoints finais:', waypoints);
-        this.updateRoutes(waypoints);
-        this.addMarkers(clients);
       },
       (error) => {
         console.error('Erro ao carregar clientes:', error);
@@ -65,49 +73,22 @@ export class RouteMap implements OnInit {
     );
   }
 
-  updateRoutes(waypoints: L.LatLng[]) {
-    console.log('Atualizando rotas com os seguintes waypoints:', waypoints);
-
-    if (this.routingControl) {
-      console.log('Removendo controle de rota anterior.');
-      this.map?.removeControl(this.routingControl);
-    }
-
-    this.routingControl = L.Routing.control({
-      waypoints, // Usa o array de waypoints dinamicamente
-      routeWhileDragging: true,
-      show: false, // Oculta o painel de informações, se necessário
-      fitSelectedRoutes: true, // Ajusta o zoom para caber todas as rotas
-    }).addTo(this.map!);
-
-    // Log para confirmar que a rota foi adicionada
-    console.log('Rota atualizada com sucesso.');
-  }
-
-
   addMarkers(clients: any[]) {
-    console.log('Adicionando marcadores para os clientes...');
-
+    // Adiciona marcadores para os destinos
     clients.forEach((client) => {
       const lat = parseFloat(client.latitude);
       const lon = parseFloat(client.longitude);
-      console.log(`Adicionando marcador para ${client.nome} em [${lat}, ${lon}]`);
       L.marker([lat, lon]).addTo(this.map!).bindPopup(client.nome);
+      console.log(`Marcador adicionado: ${client.nome} [${lat}, ${lon}]`);
     });
-
-    // Adiciona o marcador do ponto de início do usuário
-    if (this.latitude && this.longitude) {
-      const userLat = parseFloat(this.latitude);
-      const userLon = parseFloat(this.longitude);
-      console.log(`Adicionando marcador para o ponto inicial do usuário em [${userLat}, ${userLon}]`);
-      this.marker = L.marker([userLat, userLon]).addTo(this.map!).bindPopup('Ponto de Início');
-    }
   }
 
   updateMap() {
     const lat = parseFloat(this.latitude) || 0;
     const lon = parseFloat(this.longitude) || 0;
-    console.log(`Atualizando visualização do mapa para [${lat}, ${lon}]`);
-    this.map?.setView([lat, lon], 6);
+    this.map?.setView([lat, lon], 6); // Atualiza o centro do mapa
+
+    // Atualiza a rota e os marcadores
+    this.loadClients();
   }
 }
