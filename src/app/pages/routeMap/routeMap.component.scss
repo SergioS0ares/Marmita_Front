@@ -1,6 +1,6 @@
 #map {
-  height: 100%; /* Faz o mapa ocupar toda a altura disponível */
-  width: 100%; /* Faz o mapa ocupar 75% da largura da tela */
+  height: 100%; /* Faz o mapa ocupar toda a altura disponível /
+  width: 100%; / Faz o mapa ocupar 75% da largura da tela */
   float: right;
 }
 
@@ -30,5 +30,88 @@
   border-radius: 4px;
 }
 
+#button-container {
+  display: flex;
+  justify-content: center; /* Centraliza o botão */
+  margin-top: 20px; /* Ajuste de margem para dar espaçamento */
+}
 
+#button-container button {
+  min-width: 120px;
+  min-height: 40px;
+  font-size: 15px;
+  background-color: #22c55e; /* Exemplo de cor de fundo */
+  color: white;
+  border: none;
+}
 
+/* Reduzir o tamanho da tabela */
+.leaflet-routing-container {
+  max-height: 300px; /* Defina a altura máxima da tabela */
+  overflow-y: auto;  /* Adiciona o scroll vertical quando necessário */
+  width: 200px;      /* Ajusta a largura da tabela */
+  font-size: 12px;    /* Reduz o tamanho da fonte */
+  padding: 10px;      /* Adiciona espaçamento ao redor da tabela */
+  background-color: rgba(255, 255, 255, 0.8); /* Fundo semitransparente */
+  border-radius: 5px; /* Bordas arredondadas */
+}
+
+/* Estilizar as linhas da tabela */
+.leaflet-routing-container .route-summary,
+.leaflet-routing-container .leaflet-routing-waypoint {
+  margin-bottom: 5px; /* Espaçamento entre as linhas */
+}
+
+/* Estilizar o texto da tabela */
+.leaflet-routing-container .leaflet-routing-instructions {
+  font-size: 11px; /* Fonte menor para as instruções */
+  color: #333;     /* Cor do texto */
+}
+
+/* Adiciona estilo aos botões dentro da tabela, se necessário */
+.leaflet-routing-container .leaflet-routing-button {
+  font-size: 14px; /* Tamanho da fonte do botão */
+  padding: 5px 10px;
+}
+
+#route-panel {
+  max-height: 400px; /* Tamanho máximo quando estiver maximizado */
+  overflow-y: auto;  /* Adiciona scroll */
+  transition: all 0.3s ease;
+}
+
+#route-panel.minimized {
+  max-height: 0px; /* Tamanho reduzido quando estiver minimizado */
+  overflow: hidden; /* Remove o scroll quando minimizado */
+}
+
+/* CSS para esconder ou mostrar a tabela/painel */
+#leaflet-routing-panel {
+  max-height: 400px; /* Altura máxima */
+  overflow-y: auto;  /* Scroll caso o conteúdo ultrapasse a altura */
+  transition: max-height 0.3s ease;
+}
+
+#leaflet-routing-panel.minimized {
+  max-height: 0px; /* Minimizando o painel */
+  overflow: hidden; /* Remove o scroll quando minimizado */
+}
+
+/* Estilo do painel de rota do Leaflet */
+.leaflet-routing-container {
+  resize: both; /* Permite redimensionamento vertical e horizontal */
+  overflow: auto; /* Adiciona rolagem se o conteúdo exceder o tamanho */
+  max-height: 400px; /* Limita a altura máxima */
+  max-width: 400px;  /* Limita a largura máxima */
+  min-height: 100px; /* Define a altura mínima */
+  min-width: 150px;  /* Define a largura mínima */
+  border: 1px solid #ccc; /* Opcional: borda para visualização clara */
+  padding: 5px;
+}
+
+p-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
