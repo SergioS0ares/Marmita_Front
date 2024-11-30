@@ -15,6 +15,19 @@
          (ngModelChange)="updateMap()"
          placeholder="Longitude"
          step="0.0001" min="-180" max="180">
+
+  <div id="button-container">
+    <button pButton
+            label="Salvar Restaurante"
+            icon="pi pi-save"
+            (click)="salvarCoordenadas()"
+            class="p-button-success p-button-lg"
+            [disabled]="!latitude || !longitude">
+    </button>
+  </div>
 </div>
+
+<!-- Toast deve estar aqui -->
+<p-toast></p-toast>
 
 <div id="map" style="height: 550px; width: 100%;"></div>
