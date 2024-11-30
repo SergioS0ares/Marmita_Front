@@ -30,21 +30,6 @@
   border-radius: 4px;
 }
 
-#button-container {
-  display: flex;
-  justify-content: center; /* Centraliza o botão */
-  margin-top: 20px; /* Ajuste de margem para dar espaçamento */
-}
-
-#button-container button {
-  min-width: 120px;
-  min-height: 40px;
-  font-size: 15px;
-  background-color: #22c55e; /* Exemplo de cor de fundo */
-  color: white;
-  border: none;
-}
-
 /* Reduzir o tamanho da tabela */
 .leaflet-routing-container {
   max-height: 300px; /* Defina a altura máxima da tabela */
@@ -114,4 +99,43 @@ p-toast {
   top: 20px;
   right: 20px;
   z-index: 9999;
+}
+
+#calculate-route-container {
+  display: flex;
+  justify-content: center;  /* Centraliza horizontalmente */
+  align-items: center;      /* Centraliza verticalmente */
+  gap: 10px;                /* Adiciona um espaço pequeno entre os botões */
+  margin-top: 20px;         /* Adiciona um pequeno espaço entre o botão e os outros elementos */
+}
+
+#calculate-route-container button {
+  padding: 10px 40px;       /* Tamanho do botão */
+  font-size: 15px;           /* Texto pequeno */
+  min-width: 150px;          /* Largura mínima do botão */
+  border-radius: 4px;        /* Bordas arredondadas */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombras suaves */
+  transition: all 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+#calculate-route-container button:hover {
+  background-color: #1e88e5; /* Cor ao passar o mouse */
+  color: white;              /* Cor do texto ao passar o mouse */
+}
+
+
+
+#button-container {
+  display: flex;
+  justify-content: center; /* Centraliza o botão */
+  margin-top: 20px; /* Ajuste de margem para dar espaçamento */
+}
+
+#button-container button {
+  min-width: 120px;
+  min-height: 40px;
+  font-size: 15px;
+  background-color: #22c55e; /* Exemplo de cor de fundo */
+  color: white;
+  border: none;
 }

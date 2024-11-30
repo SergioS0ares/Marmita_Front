@@ -1,9 +1,9 @@
 import {
   BaseIcon
-} from "./chunk-PRVV2IOA.js";
+} from "./chunk-J5L2ADYU.js";
 import {
   UniqueComponentId
-} from "./chunk-NWJZB3T7.js";
+} from "./chunk-6ZWX23QD.js";
 import {
   Component,
   setClassMetadata,
@@ -19,9 +19,9 @@ import {
   ɵɵgetInheritedFactory,
   ɵɵnamespaceSVG,
   ɵɵproperty
-} from "./chunk-INCWAIXT.js";
+} from "./chunk-TLZF7IJ4.js";
 
-// node_modules/primeng/fesm2022/primeng-icons-timescircle.mjs
+// ../../../node_modules/primeng/fesm2022/primeng-icons-timescircle.mjs
 var TimesCircleIcon = class _TimesCircleIcon extends BaseIcon {
   pathId;
   ngOnInit() {
@@ -94,4 +94,4 @@ var TimesCircleIcon = class _TimesCircleIcon extends BaseIcon {
 export {
   TimesCircleIcon
 };
-//# sourceMappingURL=chunk-I6MWKNOM.js.map
+//# sourceMappingURL=chunk-BDC7AGX5.js.map

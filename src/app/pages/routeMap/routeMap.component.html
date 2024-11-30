@@ -25,6 +25,12 @@
             [disabled]="!latitude || !longitude">
     </button>
   </div>
+
+  <div id="calculate-route-container" style="margin-top: 1px;">
+    <button pButton label="Calcular Rota" icon="pi pi-refresh" (click)="calcularRotas()" class="p-button-info p-button-lg mt-2" [disabled]="!latitude || !longitude">
+    </button>
+  </div>
+
 </div>
 
 <!-- Toast deve estar aqui -->

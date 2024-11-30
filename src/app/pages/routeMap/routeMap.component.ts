@@ -7,7 +7,9 @@ import { RestauranteService } from '../../services/restaurante.service';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { ToastModule } from 'primeng/toast'; // Importação do módulo Toast
+import { ToastModule } from 'primeng/toast';
+import { RouteMapService } from '../../services/routeMap.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'my-app-routeMap',
@@ -29,44 +31,88 @@ export class RouteMap implements OnInit {
     private clientService: ClientService,
     private messageService: MessageService,
     private restauranteService: RestauranteService,
+    private routeMapService: RouteMapService,
+    private http: HttpClient,
     private router: Router
   ) {}
 
+  ngOnInit() {
+    this.initMap();
+    this.loadCoordenadas();
+    this.loadClients();
+  }
+
+  // Método para salvar as coordenadas do restaurante
   salvarCoordenadas() {
     this.restauranteService.updateCoordenadas(this.latitude, this.longitude).subscribe(
       () => {
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Restaurante salvo com sucesso!' });
-        this.router.navigate(['/outra-rota']); // Navegue para outra rota
       },
       (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao salvar o restaurante!' });
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Falha ao salvar o restaurante! ${error.message}` });
         console.error(error);
       }
     );
   }
 
+  // Método para calcular as rotas de entrega
+  calcularRotas() {
+    this.updateRoutes(this.clients).then((rotasCompletas) => {
+      // Monta o payload com a lista e a capacidade de marmitas
+      const payload = {
+        capacidadeMarmitas: 12,
+        rotas: rotasCompletas // Uma lista de objetos contendo as rotas
+      };
 
-  ngOnInit() {
-    this.initMap();
-    this.loadCoordenadas(); // Carrega coordenadas do restaurante
-    this.loadClients();
+
+      console.log('Payload enviado:', payload);
+
+      this.routeMapService.calcularRotas(payload).subscribe(
+        () => {
+          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Rotas calculadas com sucesso!' });
+          this.loadDestinos(); // Atualiza a lista de destinos calculados
+        },
+        (error) => {
+          console.error('Erro ao calcular rotas:', error);
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Falha ao calcular rotas! ${error.message}` });
+        }
+      );
+    }).catch((error) => {
+      console.error('Erro ao processar as rotas:', error);
+    });
   }
 
+
+  // Método para carregar os destinos calculados
+  loadDestinos() {
+    this.routeMapService.getDestino().subscribe(
+      (destinos) => {
+        console.log('Destinos obtidos do backend:', destinos);
+        this.updateRoutes(destinos); // Atualiza o mapa com os destinos retornados
+      },
+      (error) => {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar destinos!' });
+        console.error('Erro ao carregar destinos:', error);
+      }
+    );
+  }
+
+
+  // Carregar as coordenadas do restaurante
   loadCoordenadas() {
     this.restauranteService.getCoordenadas().subscribe(
       (data) => {
         if (data) {
           this.latitude = data.latitudeRestaurante;
           this.longitude = data.longitudeRestaurante;
-          this.updateMap(); // Atualiza o mapa ao carregar as coordenadas
+          this.updateMap();
         }
       },
       (error) => console.error('Erro ao carregar coordenadas:', error)
     );
   }
 
-
-
+  // Inicializar o mapa com coordenadas padrão
   initMap() {
     const lat = parseFloat(this.latitude) || 0;
     const lon = parseFloat(this.longitude) || 0;
@@ -74,30 +120,60 @@ export class RouteMap implements OnInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
   }
 
-  updateRoutes(clients: any[]) {
-    if (this.routingControl) {
-      this.map?.removeControl(this.routingControl);
-    }
+  // Atualizar o mapa com as novas rotas
+  updateRoutes(clients: any[]): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      let rotasProcessadas = 0;
+      const rotasCompletas: any[] = [];
 
-    clients.forEach((client) => {
-      const waypoint = L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
-      const newRoutingControl = L.Routing.control({
-        waypoints: [
-          L.latLng(parseFloat(this.latitude), parseFloat(this.longitude)),
-          waypoint
-        ],
-        routeWhileDragging: true,
-        show: true
-      }).addTo(this.map!);
+      clients.forEach((client, index) => {
+        const waypoint = L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
+        const newRoutingControl = L.Routing.control({
+          waypoints: [L.latLng(parseFloat(this.latitude), parseFloat(this.longitude)), waypoint],
+          routeWhileDragging: false,
+          show: false,
+          autoRoute: true // Garante que o cálculo inicie imediatamente
+        }).addTo(this.map!); // Força a entrada no mapa imediatamente
+
+        console.log(`Tentando calcular rota para: ${client.nome} (Index: ${index})`);
+
+        newRoutingControl.on('routesfound', (event) => {
+          const route = event.routes[0];
+          client.distanciaViagem = route.summary.totalDistance / 1000; // km
+          client.tempoViagem = route.summary.totalTime / 60; // minutos
+
+          console.log(`Rota encontrada para: ${client.nome}`);
+          console.log('Distância (km):', client.distanciaViagem);
+          console.log('Tempo (min):', client.tempoViagem);
+
+          rotasCompletas.push(client);
+          rotasProcessadas++;
+
+          if (rotasProcessadas === clients.length) {
+            console.log('Todas as rotas foram processadas:', rotasCompletas);
+            resolve(rotasCompletas);
+          }
+        });
+
+        newRoutingControl.on('routingerror', (error) => {
+          console.error(`Erro ao calcular a rota para ${client.nome}:`, error);
+          reject(error);
+        });
+
+        // Força manualmente o cálculo da rota, caso o evento automático não funcione
+        newRoutingControl.route();
+      });
     });
   }
 
+  // Carregar os clientes
   loadClients() {
     this.clientService.getClients().subscribe(
       (clients) => {
         if (clients.length >= 1) {
           this.updateRoutes(clients);
           this.addMarkers(clients);
+          this.clients = clients;
         }
       },
       (error) => {
@@ -106,6 +182,7 @@ export class RouteMap implements OnInit {
     );
   }
 
+  // Adicionar marcadores no mapa para cada cliente
   addMarkers(clients: any[]) {
     clients.forEach((client) => {
       const lat = parseFloat(client.latitude);
@@ -120,5 +197,18 @@ export class RouteMap implements OnInit {
     const lon = parseFloat(this.longitude) || 0;
     this.map?.setView([lat, lon], 6);
     this.loadClients();
+  }
+
+
+  // Carregar o histórico de rotas
+  loadRotas() {
+    this.routeMapService.getRotas().subscribe(
+      (rotas) => {
+        console.log('Histórico de rotas:', rotas);
+      },
+      (error) => {
+        console.error('Erro ao carregar o histórico de rotas:', error);
+      }
+    );
   }
 }
