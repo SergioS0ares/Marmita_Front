@@ -34,6 +34,8 @@ export class ClienteComponent implements OnInit {
   displayDialog = false;
   newItem = { nome: '', telefone: '', latitude: '', longitude: '', descricaoEndereco: '', sujestH: '', quantPedido: 0 };
   editingItem: any = null;
+  editDialog: boolean = false; // Controle do modal de edição
+  selectedItem: any = {};
 
   constructor(private clienteService: ClientService, private confirmationService: ConfirmationService) {}
 
@@ -64,10 +66,32 @@ export class ClienteComponent implements OnInit {
   }
 
   editItem(item: any) {
-    this.newItem = { ...item };
-    this.editingItem = item;
-    this.displayDialog = true;
+    this.selectedItem = { ...item }; // Cria uma cópia do item selecionado
+    this.editDialog = true; // Abre o modal de edição
   }
+
+  saveItem() {
+    console.log('Enviando para o backend:', this.selectedItem);
+    this.clienteService.updateClient(this.selectedItem.id, this.selectedItem).subscribe({
+      next: (response) => {
+        console.log('Resposta do backend:', response);
+        const index = this.data.findIndex((i) => i.id === this.selectedItem.id);
+        if (index !== -1) {
+          this.data[index] = response; // Atualiza o item no array com os dados do backend
+        }
+        this.editDialog = false; // Fecha o modal
+        console.log('Item atualizado no backend:', response);
+      },
+      error: (err) => {
+        console.error('Erro ao atualizar o item no backend:', err.message);
+      }
+    });
+  }
+
+  cancelEdit() {
+    this.editDialog = false; // Fecha o modal sem salvar
+  }
+
 
   loadClients() {
     this.clienteService.getClients().subscribe(

@@ -25,6 +25,10 @@ export class ClientService {
     return this.http.post(`${this.apiUrl}/saveClient`, client); // O token será adicionado automaticamente pelo interceptor
   }
 
+  updateClient(id: any, updatedData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/updateClient/${id}`, updatedData);
+  }
+
   deleteClient(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/deleteClient/${id}`);
 }

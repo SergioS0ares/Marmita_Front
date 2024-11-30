@@ -94,3 +94,35 @@
     </div>
   </form>
 </p-dialog>
+<p-dialog
+  header="Editar Item"
+  [(visible)]="editDialog"
+  [style]="{ width: '400px' }"
+  [modal]="true"
+  [closable]="false">
+  <form (ngSubmit)="saveItem()" #editForm="ngForm">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="nome">Nome</label>
+        <input id="nome" pInputText [(ngModel)]="selectedItem.nome" name="nome" required />
+      </div>
+      <div class="p-field">
+        <label for="telefone">Telefone</label>
+        <p-inputMask mask="(99) 99999-9999" [(ngModel)]="selectedItem.telefone" name="telefone" required></p-inputMask>
+      </div>
+      <div class="p-field">
+        <label for="latitude">Latitude</label>
+        <input id="latitude" pInputText [(ngModel)]="selectedItem.latitude" name="latitude" required />
+      </div>
+      <div class="p-field">
+        <label for="longitude">Longitude</label>
+        <input id="longitude" pInputText [(ngModel)]="selectedItem.longitude" name="longitude" required />
+      </div>
+      <p-footer>
+        <button pButton type="submit" label="Salvar" [disabled]="editForm.invalid" class="p-button-success"></button>
+        <button pButton type="button" label="Cancelar" (click)="cancelEdit()" class="p-button-danger"></button>
+      </p-footer>
+    </div>
+  </form>
+</p-dialog>
+
