@@ -10,11 +10,10 @@ export class RouteMapService {
 
   constructor(private http: HttpClient) {}
 
-  // Ajuste no método calcularRotas para aceitar um objeto
-  calcularRotas(payload: { capacidadeMarmitas: number; rotas: any[] }): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/rotas/calcularRotas', payload);
+  // Defina o tipo como any[] ou outro tipo específico, dependendo da estrutura esperada
+  calcularRotas(rotas: any[]): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/calcularRotas`, rotas);
   }
-
 
   // Retorne um tipo mais específico se souber a estrutura exata de "Destino" e "Rotas"
   getDestino(): Observable<any[]> {

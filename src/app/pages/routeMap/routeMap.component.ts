@@ -55,36 +55,47 @@ export class RouteMap implements OnInit {
     );
   }
 
-  // Método para calcular as rotas de entrega
   calcularRotas() {
-    this.updateRoutes(this.clients).then((rotasCompletas) => {
-      // Monta o payload com a lista e a capacidade de marmitas
-      const payload = {
+    // Primeiro, chamar o updateRoutes para calcular distância e tempo
+    this.updateRoutes(this.clients).then(rotasCompletas => {
+      console.log('Rotas com distância e tempo calculados:', rotasCompletas);
+
+      // Depois de calcular, criar a lista com os dados finais
+      const rotasData = rotasCompletas.map(client => ({
+        nome: client.nome,
+        latitude: client.latitude,
+        longitude: client.longitude,
+        quantidadeMarmitas: client.quantPedido,
+        sujestH: client.sujestH,
         capacidadeMarmitas: 12,
-        rotas: rotasCompletas // Uma lista de objetos contendo as rotas
-      };
+        distanciaViagem: client.distanciaViagem, // Já calculado
+        tempoViagem: client.tempoViagem          // Já calculado
+      }));
 
+      console.log('Lista final de rotas para enviar ao backend:', rotasData);
 
-      console.log('Payload enviado:', payload);
+      // Log do POST
+      console.log('Enviando POST com as rotas para o backend');
 
-      this.routeMapService.calcularRotas(payload).subscribe(
+      // Enviar a lista para o backend
+      this.routeMapService.calcularRotas(rotasData).subscribe(
         () => {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Rotas calculadas com sucesso!' });
-          this.loadDestinos(); // Atualiza a lista de destinos calculados
+          this.loadDestinos(); // Carrega os destinos retornados pelo backend
         },
         (error) => {
-          console.error('Erro ao calcular rotas:', error);
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Falha ao calcular rotas! ${error.message}` });
+          console.error('Erro ao calcular rotas:', error);
         }
       );
-    }).catch((error) => {
-      console.error('Erro ao processar as rotas:', error);
     });
   }
 
-
   // Método para carregar os destinos calculados
   loadDestinos() {
+    // Log do GET
+    console.log('Enviando GET para carregar os destinos do backend');
+
     this.routeMapService.getDestino().subscribe(
       (destinos) => {
         console.log('Destinos obtidos do backend:', destinos);
@@ -96,6 +107,7 @@ export class RouteMap implements OnInit {
       }
     );
   }
+
 
 
   // Carregar as coordenadas do restaurante

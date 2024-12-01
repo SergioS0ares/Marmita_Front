@@ -86,10 +86,10 @@
 .leaflet-routing-container {
   resize: both; /* Permite redimensionamento vertical e horizontal */
   overflow: auto; /* Adiciona rolagem se o conteúdo exceder o tamanho */
-  max-height: 400px; /* Limita a altura máxima */
+  max-height: 300px; /* Limita a altura máxima */
   max-width: 400px;  /* Limita a largura máxima */
   min-height: 100px; /* Define a altura mínima */
-  min-width: 150px;  /* Define a largura mínima */
+  min-width: 200px;  /* Define a largura mínima */
   border: 1px solid #ccc; /* Opcional: borda para visualização clara */
   padding: 5px;
 }
@@ -122,8 +122,6 @@ p-toast {
   background-color: #1e88e5; /* Cor ao passar o mouse */
   color: white;              /* Cor do texto ao passar o mouse */
 }
-
-
 
 #button-container {
   display: flex;
