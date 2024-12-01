@@ -26,6 +26,7 @@ export class RouteMap implements OnInit {
   marker: L.Marker | null = null;
   routingControl: L.Routing.Control | null = null;
   clients: any[] = [];
+  routeControls: L.Routing.Control[] = []; // Array para armazenar os controles de rotas
 
   constructor(
     private clientService: ClientService,
@@ -67,15 +68,12 @@ export class RouteMap implements OnInit {
         longitude: client.longitude,
         quantidadeMarmitas: client.quantPedido,
         sujestH: client.sujestH,
-        capacidadeMarmitas: 12,
+        capacidadeMarmitas: client.capacidadeMarmitas || 12, // Não redefinir para 12 nas rodadas subsequentes
         distanciaViagem: client.distanciaViagem, // Já calculado
         tempoViagem: client.tempoViagem          // Já calculado
       }));
 
       console.log('Lista final de rotas para enviar ao backend:', rotasData);
-
-      // Log do POST
-      console.log('Enviando POST com as rotas para o backend');
 
       // Enviar a lista para o backend
       this.routeMapService.calcularRotas(rotasData).subscribe(
@@ -91,11 +89,8 @@ export class RouteMap implements OnInit {
     });
   }
 
-  // Método para carregar os destinos calculados
   loadDestinos() {
-    // Log do GET
     console.log('Enviando GET para carregar os destinos do backend');
-
     this.routeMapService.getDestino().subscribe(
       (destinos) => {
         console.log('Destinos obtidos do backend:', destinos);
@@ -108,6 +103,16 @@ export class RouteMap implements OnInit {
     );
   }
 
+  // Limpar as rotas antigas
+  clearRoutes() {
+    this.routeControls.forEach((control) => {
+      const container = control.getContainer();
+      if (container && container.parentElement) {
+        container.parentElement.removeChild(container);
+      }
+    });
+    this.routeControls = []; // Limpa a lista de controles de rotas
+  }
 
 
   // Carregar as coordenadas do restaurante
@@ -133,15 +138,26 @@ export class RouteMap implements OnInit {
   }
 
   // Atualizar o mapa com as novas rotas
+  // Atualizar as rotas no mapa com base nos clientes
   updateRoutes(clients: any[]): Promise<any[]> {
     return new Promise((resolve, reject) => {
+      // Limpar as rotas anteriores
+      this.clearRoutes();
+
       let rotasProcessadas = 0;
       const rotasCompletas: any[] = [];
+
+      // Para a primeira rodada, o ponto de partida é as coordenadas do restaurante
+      // Na segunda e nas subsequentes, o ponto de partida será o primeiro cliente da lista
+      const inicioLat = this.latitude || parseFloat(clients[0]?.latitude);
+      const inicioLon = this.longitude || parseFloat(clients[0]?.longitude);
+
+
 
       clients.forEach((client, index) => {
         const waypoint = L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
         const newRoutingControl = L.Routing.control({
-          waypoints: [L.latLng(parseFloat(this.latitude), parseFloat(this.longitude)), waypoint],
+          waypoints: [L.latLng(parseFloat(inicioLat as string), parseFloat(inicioLon as string)), waypoint],
           routeWhileDragging: false,
           show: false,
           autoRoute: true // Garante que o cálculo inicie imediatamente
@@ -175,9 +191,12 @@ export class RouteMap implements OnInit {
         // Força manualmente o cálculo da rota, caso o evento automático não funcione
         newRoutingControl.route();
       });
+
+      
     });
   }
 
+  // Carregar os clientes
   // Carregar os clientes
   loadClients() {
     this.clientService.getClients().subscribe(
@@ -211,16 +230,13 @@ export class RouteMap implements OnInit {
     this.loadClients();
   }
 
-
   // Carregar o histórico de rotas
   loadRotas() {
     this.routeMapService.getRotas().subscribe(
       (rotas) => {
         console.log('Histórico de rotas:', rotas);
       },
-      (error) => {
-        console.error('Erro ao carregar o histórico de rotas:', error);
-      }
+      (error) => console.error('Erro ao carregar histórico de rotas:', error)
     );
   }
 }

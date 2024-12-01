@@ -17,8 +17,11 @@ export class RouteMapService {
 
   // Retorne um tipo mais específico se souber a estrutura exata de "Destino" e "Rotas"
   getDestino(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/getDestino`);
+    return this.http.get<any[]>(`${this.apiUrl}/getDestino`, {
+      headers: { 'Accept': 'application/json' }
+    });
   }
+
 
   getRotas(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/getRotas`);

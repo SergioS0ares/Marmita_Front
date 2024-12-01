@@ -15,7 +15,7 @@ import {LogoutService} from "../../services/logout.service";
     NgIf
   ],
   templateUrl: './navigation.component.html',
-  styles: ``
+  styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent {
   authService = inject(AuthService)

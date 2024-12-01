@@ -7,14 +7,16 @@
 }
 
 .form-container {
-  background: #fff; /* Fundo branco para o formulário */
-  padding: 2rem; /* Espaçamento interno */
-  border-radius: 8px; /* Bordas arredondadas */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px; /* Largura máxima */
-  text-align: center; /* Centraliza o conteúdo no formulário */
+  max-width: 400px;
+  text-align: center;
+  min-height: 100px; /* Altura mínima */
 }
+
 
 h1 {
   text-align: center;
@@ -32,4 +34,17 @@ h1 {
 
 p-button {
   width: auto; /* Ajusta a largura do botão ao conteúdo */
+}
+
+::ng-deep .p-button {
+  background-color: #e57d00fc !important; /* Laranja */
+  border: none !important;
+  color: #fff !important; /* Texto branco */
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #e57d00fc !important; /* Laranja mais escuro */
+  }
 }
