@@ -34,6 +34,11 @@ export class MenuService {
           label: "Entregas", // Nome do componente
           routerLink: "routeMap", // O link para a rota do componente
           icon: "pi pi-map" // Ícone do mapa
+        },
+        {
+          label: "Historico", // Nome do componente
+          routerLink: "historico", // O link para a rota do componente
+          icon: "pi pi-map" // Ícone do mapa
         }
 
       ]

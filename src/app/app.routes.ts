@@ -24,5 +24,10 @@ export const routes: Routes = [
     path: "routeMap",
     loadComponent: () => import("./pages/routeMap/routeMap.component").then(mod => mod.RouteMap),
     canActivate: [authGuard]
+  },
+  {
+    path: "historico",
+    loadComponent: () => import("./pages/historico-rotas/historico-rotas.component").then(mod => mod.HistoricoRotasComponent),
+    canActivate: [authGuard]
   }
 ];

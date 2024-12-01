@@ -1,6 +1,20 @@
 import {
+  ButtonDirective,
+  ButtonModule
+} from "./chunk-RLAIPFTR.js";
+import "./chunk-FRJEQ5UL.js";
+import {
+  Ripple,
+  RippleModule
+} from "./chunk-WEFYXGCX.js";
+import {
   TimesIcon
-} from "./chunk-BWEGIV3K.js";
+} from "./chunk-QDOHMOHL.js";
+import "./chunk-OIV25V74.js";
+import {
+  BaseIcon,
+  DomHandler
+} from "./chunk-PRVV2IOA.js";
 import {
   animate,
   animation,
@@ -8,21 +22,7 @@ import {
   transition,
   trigger,
   useAnimation
-} from "./chunk-ZB3ICAD3.js";
-import {
-  ButtonDirective,
-  ButtonModule
-} from "./chunk-WHB7AUI6.js";
-import "./chunk-5G3E4D4M.js";
-import "./chunk-TIYPGUZ5.js";
-import {
-  Ripple,
-  RippleModule
-} from "./chunk-U6NYD3DY.js";
-import {
-  BaseIcon,
-  DomHandler
-} from "./chunk-J5L2ADYU.js";
+} from "./chunk-QZMA2GF3.js";
 import {
   Footer,
   Header,
@@ -32,7 +32,7 @@ import {
   TranslationKeys,
   UniqueComponentId,
   zindexutils
-} from "./chunk-6ZWX23QD.js";
+} from "./chunk-NWJZB3T7.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -41,7 +41,7 @@ import {
   NgStyle,
   NgTemplateOutlet,
   isPlatformBrowser
-} from "./chunk-IFTR3X5T.js";
+} from "./chunk-YBJTIQQH.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -108,12 +108,12 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate,
   ɵɵviewQuery
-} from "./chunk-TLZF7IJ4.js";
+} from "./chunk-INCWAIXT.js";
 import {
   __spreadValues
 } from "./chunk-X6JV76XL.js";
 
-// ../../../node_modules/primeng/fesm2022/primeng-focustrap.mjs
+// node_modules/primeng/fesm2022/primeng-focustrap.mjs
 var FocusTrap = class _FocusTrap {
   /**
    * When set as true, focus wouldn't be managed.
@@ -203,7 +203,7 @@ var FocusTrapModule = class _FocusTrapModule {
   }], null, null);
 })();
 
-// ../../../node_modules/primeng/fesm2022/primeng-icons-windowmaximize.mjs
+// node_modules/primeng/fesm2022/primeng-icons-windowmaximize.mjs
 var WindowMaximizeIcon = class _WindowMaximizeIcon extends BaseIcon {
   pathId;
   ngOnInit() {
@@ -273,7 +273,7 @@ var WindowMaximizeIcon = class _WindowMaximizeIcon extends BaseIcon {
   }], null, null);
 })();
 
-// ../../../node_modules/primeng/fesm2022/primeng-icons-windowminimize.mjs
+// node_modules/primeng/fesm2022/primeng-icons-windowminimize.mjs
 var WindowMinimizeIcon = class _WindowMinimizeIcon extends BaseIcon {
   pathId;
   ngOnInit() {
@@ -343,7 +343,7 @@ var WindowMinimizeIcon = class _WindowMinimizeIcon extends BaseIcon {
   }], null, null);
 })();
 
-// ../../../node_modules/primeng/fesm2022/primeng-dialog.mjs
+// node_modules/primeng/fesm2022/primeng-dialog.mjs
 var _c0 = ["titlebar"];
 var _c1 = ["content"];
 var _c2 = ["footer"];

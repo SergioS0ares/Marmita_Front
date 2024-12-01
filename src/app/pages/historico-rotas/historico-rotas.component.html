@@ -1,0 +1,24 @@
+<p-table [value]="rotas" dataKey="id">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Quantidade de Marmitas</th>
+      <th>Distância da Viagem (km)</th>
+      <th>Tempo da Viagem (min)</th>
+      <th>Sugestão de Horário</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rota>
+    <tr>
+      <td>{{ rota.nome }}</td>
+      <td>{{ rota.latitude }}</td>
+      <td>{{ rota.longitude }}</td>
+      <td>{{ rota.quantidadeMarmitas }}</td>
+      <td>{{ rota.distanciaViagem }}</td>
+      <td>{{ rota.tempoViagem }}</td>
+      <td>{{ rota.sujestH }}</td>
+    </tr>
+  </ng-template>
+</p-table>
