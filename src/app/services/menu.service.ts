@@ -38,6 +38,11 @@ export class MenuService {
           routerLink: "routeMap", // O link para a rota do componente
           icon: "pi pi-map", // Ícone do mapa
           styleClass: 'custom-menu-item'
+        },
+        {
+          label: "Historico", // Nome do componente
+          routerLink: "historico", // O link para a rota do componente
+          icon: "pi pi-map" // Ícone do mapa
         }
 
       ]
