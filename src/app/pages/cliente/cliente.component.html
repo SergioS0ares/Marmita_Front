@@ -118,6 +118,28 @@
         <label for="longitude">Longitude</label>
         <input id="longitude" pInputText [(ngModel)]="selectedItem.longitude" name="longitude" required />
       </div>
+      <div class="p-field">
+        <label for="descricaoEndereco">Descrição do Endereço</label>
+        <input id="descricao" pInputText [(ngModel)]="selectedItem.descricaoEndereco" name="descricaoEndereco" required #descricaoEndereco="ngModel" />
+        <div *ngIf="descricaoEndereco.invalid && descricaoEndereco.touched" class="p-error">Descrição do Endereço é obrigatória.</div>
+      </div>
+      <br/>
+
+
+      <div class="p-field">
+        <label for="sujestH">Sugestão de Horário</label>
+        <input id="sujestHora" pInputText [(ngModel)]="selectedItem.sujestH" name="sujestH" required #sujestH="ngModel" />
+        <div *ngIf="sujestH.invalid && sujestH.touched" class="p-error">Digite o horário</div>
+      </div>
+
+      <br/>
+      <!-- Quantidade de Marmitas -->
+      <div class="p-field">
+        <label for="quantPedido">Quantidade de Marmitas</label>
+        <input id="quantidadePedido" pInputText [(ngModel)]="selectedItem.quantPedido" name="quantPedido" type="number" required #quantPedido="ngModel" min="0" />
+        <div *ngIf="quantPedido.invalid && quantPedido.touched" class="p-error">Quantidade de marmitas não pode ser negativa.</div>
+      </div>
+      <br/>
       <p-footer>
         <button pButton type="submit" label="Salvar" [disabled]="editForm.invalid" class="p-button-success"></button>
         <button pButton type="button" label="Cancelar" (click)="cancelEdit()" class="p-button-danger"></button>
