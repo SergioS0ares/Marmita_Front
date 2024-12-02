@@ -63,15 +63,16 @@ export class RouteMap implements OnInit {
 
   calcularRotas() {
     this.updateRoutes(this.clients, this.destinos).then(rotasCompletas => {
-      const rotasData = rotasCompletas.map(client => ({
-        nome: client.nome,
-        latitude: client.latitude,
-        longitude: client.longitude,
-        quantidadeMarmitas: client.quantPedido,
-        sujestH: client.sujestH,
-        capacidadeMarmitas: client.capacidadeMarmitas || 12,
-        distanciaViagem: client.distanciaViagem,
-        tempoViagem: client.tempoViagem
+      const rotasData = rotasCompletas.map((rota, index) => ({
+        id: rota.id || null,  // Adiciona o ID se existir
+        nome: rota.nome,
+        latitude: rota.latitude,
+        longitude: rota.longitude,
+        quantidadeMarmitas: this.destinos.length > 0 ? rota.quantidadeMarmitas : rota.quantPedido,
+        sujestH: rota.sujestH,
+        capacidadeMarmitas: rota.capacidadeMarmitas || 12,
+        distanciaViagem: rota.distanciaViagem,
+        tempoViagem: rota.tempoViagem,
       }));
 
       // Log para verificar os dados das rotas antes do POST
@@ -162,7 +163,7 @@ export class RouteMap implements OnInit {
 
   updateRoutes(clients: any[], destinos: any[]): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      this.clearRoutes();
+      
 
       let rotasProcessadas = 0;
       const rotasCompletas: any[] = [];
