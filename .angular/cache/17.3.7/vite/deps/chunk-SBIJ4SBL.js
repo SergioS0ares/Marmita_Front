@@ -1,9 +1,9 @@
 import {
   DomHandler
-} from "./chunk-PRVV2IOA.js";
+} from "./chunk-QTG5WEFO.js";
 import {
   CommonModule
-} from "./chunk-YBJTIQQH.js";
+} from "./chunk-QSMYYE3K.js";
 import {
   Directive,
   ElementRef,
@@ -17,9 +17,9 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵdirectiveInject
-} from "./chunk-INCWAIXT.js";
+} from "./chunk-MF7XFMQV.js";
 
-// node_modules/primeng/fesm2022/primeng-autofocus.mjs
+// ../../../../node_modules/primeng/fesm2022/primeng-autofocus.mjs
 var AutoFocus = class _AutoFocus {
   host;
   constructor(host) {
@@ -114,4 +114,4 @@ export {
   AutoFocus,
   AutoFocusModule
 };
-//# sourceMappingURL=chunk-OIV25V74.js.map
+//# sourceMappingURL=chunk-SBIJ4SBL.js.map

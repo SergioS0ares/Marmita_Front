@@ -63,35 +63,41 @@ export class RouteMap implements OnInit {
 
   calcularRotas() {
     this.updateRoutes(this.clients, this.destinos).then(rotasCompletas => {
-      const rotasData = rotasCompletas.map((rota, index) => ({
-        id: rota.id || null,  // Adiciona o ID se existir
-        nome: rota.nome,
-        latitude: rota.latitude,
-        longitude: rota.longitude,
-        quantidadeMarmitas: this.destinos.length > 0 ? rota.quantidadeMarmitas : rota.quantPedido,
-        sujestH: rota.sujestH,
-        capacidadeMarmitas: rota.capacidadeMarmitas || 12,
-        distanciaViagem: rota.distanciaViagem,
-        tempoViagem: rota.tempoViagem,
-      }));
+        const rotasData = rotasCompletas.map((rota) => ({
+            id: rota.id || null,
+            nome: rota.nome,
+            latitude: rota.latitude,
+            longitude: rota.longitude,
+            quantidadeMarmitas: this.destinos.length > 0 ? rota.quantidadeMarmitas : rota.quantPedido,
+            sujestH: rota.sujestH,
+            capacidadeMarmitas: rota.capacidadeMarmitas || 12,
+            distanciaViagem: rota.distanciaViagem,
+            tempoViagem: rota.tempoViagem,
+        }));
 
-      // Log para verificar os dados das rotas antes do POST
-      console.log('Enviando os dados para calcular as rotas:', rotasData);
+        console.log('Enviando os dados para calcular as rotas:', rotasData);
 
-      // Chamada POST para calcular rotas
-      this.routeMapService.calcularRotas(rotasData).subscribe(
-        (response) => {
-          console.log('Resposta recebida ao calcular rotas:', response);
-          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Rotas calculadas com sucesso!' });
-          this.loadDestinos();
-        },
-        (error) => {
-          console.error('Erro ao calcular rotas:', error);
-          this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Falha ao calcular rotas! ${error.message}` });
+        if (rotasCompletas.length === 1) {
+            console.log('Somente uma rota encontrada, carregando histórico de rotas.');
+            this.loadRotas();
+        } else {
+            // Chamada POST para calcular rotas
+            this.routeMapService.calcularRotas(rotasData).subscribe(
+                (response) => {
+                    console.log('Resposta recebida ao calcular rotas:', response);
+                    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Rotas calculadas com sucesso!' });
+                    this.loadDestinos();
+                },
+                (error) => {
+                    console.error('Erro ao calcular rotas:', error);
+                    this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Falha ao calcular rotas! ${error.message}` });
+                }
+            );
         }
-      );
     });
-  }
+}
+
+
 
   loadDestinos() {
     console.log('Iniciando requisição GET para carregar destinos...');
@@ -163,95 +169,68 @@ export class RouteMap implements OnInit {
 
   updateRoutes(clients: any[], destinos: any[]): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      
+        let rotasProcessadas = 0;
+        const rotasCompletas: any[] = [];
+        let inicioLat: number;
+        let inicioLon: number;
 
-      let rotasProcessadas = 0;
-      const rotasCompletas: any[] = [];
-      let inicioLat = parseFloat(this.latitude) || 0;
-      let inicioLon = parseFloat(this.longitude) || 0;
+        // Verifica se é a primeira rodada ou não
+        const isPrimeiraRodada = !destinos || destinos.length === 0;
 
-      // Verifica se é a primeira rodada ou não
-      let listaDeClientes = [];
-      const isPrimeiraRodada = !destinos || destinos.length === 0; // Corrigido: verifica se destinos é vazio ou não
-
-      // Log para verificar o que está vindo no destinos
-      console.log('Destinos recebidos LISTA:', destinos);
-
-      if (isPrimeiraRodada) {
-        // Na primeira rodada, usamos os dados do cliente e restaurante
-        listaDeClientes = clients; // Usando os dados do cliente
-        console.log('Primeira rodada - Usando clientes e restaurante como origem');
-      } else {
-        // Nas rodadas subsequentes, usamos os destinos recebidos do backend
-        if (destinos && destinos.length > 0) {
-          listaDeClientes = destinos;
-
-          // Log para verificar as coordenadas do primeiro destino
-          console.log('Coordenadas do primeiro destino:', destinos[0].latitude, destinos[0].longitude);
-
-          // Define o primeiro destino como a origem
-          inicioLat = parseFloat(destinos[0].latitude); // O primeiro destino é a origem
-          inicioLon = parseFloat(destinos[0].longitude);
-
-          console.log('Rodada subsequente - Usando destinos e primeiro destino como origem');
+        let listaDeClientes = isPrimeiraRodada ? clients : destinos;
+        if (isPrimeiraRodada) {
+            inicioLat = parseFloat(this.latitude) || 0;
+            inicioLon = parseFloat(this.longitude) || 0;
+            console.log('Primeira rodada - Usando clientes e restaurante como origem');
+        } else if (destinos.length > 0) {
+            inicioLat = parseFloat(destinos[0].latitude);
+            inicioLon = parseFloat(destinos[0].longitude);
+            console.log('Rodada subsequente - Usando destinos e primeiro destino como origem');
         } else {
-          console.error('A lista de destinos está vazia ou inválida');
-          reject('A lista de destinos está vazia ou inválida');
-          return;
+            console.error('A lista de destinos está vazia ou inválida');
+            reject('A lista de destinos está vazia ou inválida');
+            return;
         }
-      }
 
-      // Processa cada cliente ou destino
-      listaDeClientes.forEach((client, index) => {
-        console.log(`Processando ${client.nome} (Index: ${index})`);
-        console.log('Coordenadas do cliente ou destino:', client.latitude, client.longitude);
+        // Processa cada cliente ou destino
+        listaDeClientes.forEach((client) => {
+            const waypoint = L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
 
-        // Define o ponto de destino (se não for a primeira rodada, o primeiro destino é a origem)
-        const waypoint = L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
+            const newRoutingControl = L.Routing.control({
+                waypoints: [L.latLng(inicioLat, inicioLon), waypoint],
+                routeWhileDragging: false,
+                show: false,
+                autoRoute: true
+            }).addTo(this.map!);
 
-        // Configura a rota com o ponto de origem e o ponto de destino
-        const newRoutingControl = L.Routing.control({
-          waypoints: [L.latLng(inicioLat, inicioLon), waypoint],
-          routeWhileDragging: false,
-          show: false,
-          autoRoute: true
-        }).addTo(this.map!);
+            newRoutingControl.on('routesfound', (event) => {
+                const route = event.routes[0];
+                client.distanciaViagem = route.summary.totalDistance / 1000; // em km
+                client.tempoViagem = route.summary.totalTime / 60; // em minutos
 
-        // Log para confirmar o evento de rota encontrada
-        newRoutingControl.on('routesfound', (event) => {
-          const route = event.routes[0];
-          client.distanciaViagem = route.summary.totalDistance / 1000; // em km
-          client.tempoViagem = route.summary.totalTime / 60; // em minutos
+                console.log(`Rota encontrada para ${client.nome}`);
+                console.log('Distância (km):', client.distanciaViagem);
+                console.log('Tempo (min):', client.tempoViagem);
 
-          console.log(`Rota encontrada para ${client.nome}`);
-          console.log('Distância (km):', client.distanciaViagem);
-          console.log('Tempo (min):', client.tempoViagem);
+                rotasCompletas.push(client);
+                rotasProcessadas++;
 
-          rotasCompletas.push(client);
-          rotasProcessadas++;
+                if (rotasProcessadas === listaDeClientes.length) {
+                    console.log('Todas as rotas foram processadas:', rotasCompletas);
+                    resolve(rotasCompletas);
+                }
+            });
 
-          if (rotasProcessadas === listaDeClientes.length) {
-            console.log('Todas as rotas foram processadas:', rotasCompletas);
-            resolve(rotasCompletas);
-          }
+            newRoutingControl.on('routingerror', (error) => {
+                console.error(`Erro ao calcular a rota para ${client.nome}:`, error);
+                reject(error);
+            });
+
+            newRoutingControl.route();
         });
-
-        // Log para erro de rota
-        newRoutingControl.on('routingerror', (error) => {
-          console.error(`Erro ao calcular a rota para ${client.nome}:`, error);
-          reject(error);
-        });
-
-        newRoutingControl.route();
-
-        // Atualiza a origem para o próximo destino nas rodadas subsequentes
-        if (!isPrimeiraRodada && index > 0) {
-          inicioLat = parseFloat(client.latitude);
-          inicioLon = parseFloat(client.longitude);
-        }
-      });
     });
-  }
+}
+
 
   loadClients() {
     this.clientService.getClients().subscribe(

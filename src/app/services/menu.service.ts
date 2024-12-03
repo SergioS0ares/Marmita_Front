@@ -42,7 +42,8 @@ export class MenuService {
         {
           label: "Historico", // Nome do componente
           routerLink: "historico", // O link para a rota do componente
-          icon: "pi pi-clock"
+          icon: "pi pi-clock",
+          styleClass: 'white-text'
         }
 
       ]

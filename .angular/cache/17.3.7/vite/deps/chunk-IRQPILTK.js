@@ -1,6 +1,6 @@
 import {
   BaseIcon
-} from "./chunk-PRVV2IOA.js";
+} from "./chunk-QTG5WEFO.js";
 import {
   Component,
   setClassMetadata,
@@ -14,9 +14,9 @@ import {
   ɵɵelementStart,
   ɵɵgetInheritedFactory,
   ɵɵnamespaceSVG
-} from "./chunk-INCWAIXT.js";
+} from "./chunk-MF7XFMQV.js";
 
-// node_modules/primeng/fesm2022/primeng-icons-times.mjs
+// ../../../../node_modules/primeng/fesm2022/primeng-icons-times.mjs
 var TimesIcon = class _TimesIcon extends BaseIcon {
   static ɵfac = /* @__PURE__ */ (() => {
     let ɵTimesIcon_BaseFactory;
@@ -69,4 +69,4 @@ var TimesIcon = class _TimesIcon extends BaseIcon {
 export {
   TimesIcon
 };
-//# sourceMappingURL=chunk-QDOHMOHL.js.map
+//# sourceMappingURL=chunk-IRQPILTK.js.map
