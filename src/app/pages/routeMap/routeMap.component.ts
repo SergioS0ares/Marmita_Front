@@ -177,7 +177,7 @@ export class RouteMap implements OnInit {
         // Verifica se é a primeira rodada ou não
         const isPrimeiraRodada = !destinos || destinos.length === 0;
 
-        let listaDeClientes = isPrimeiraRodada ? clients : destinos;
+        const listaDeClientes = isPrimeiraRodada ? clients : destinos;
         if (isPrimeiraRodada) {
             inicioLat = parseFloat(this.latitude) || 0;
             inicioLon = parseFloat(this.longitude) || 0;
@@ -192,44 +192,47 @@ export class RouteMap implements OnInit {
             return;
         }
 
-        // Processa cada cliente ou destino
-        listaDeClientes.forEach((client) => {
-            const waypoint = L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
+        // Processa cada cliente ou destino com atraso para evitar "Too Many Requests"
+        listaDeClientes.forEach((client, index) => {
+            setTimeout(() => {
+                const waypoint = L.latLng(parseFloat(client.latitude), parseFloat(client.longitude));
 
-            const newRoutingControl = L.Routing.control({
-                waypoints: [L.latLng(inicioLat, inicioLon), waypoint],
-                routeWhileDragging: false,
-                show: false,
-                autoRoute: true
-            }).addTo(this.map!);
+                const newRoutingControl = L.Routing.control({
+                    waypoints: [L.latLng(inicioLat, inicioLon), waypoint],
+                    routeWhileDragging: false,
+                    show: false,
+                    autoRoute: true
+                }).addTo(this.map!);
 
-            newRoutingControl.on('routesfound', (event) => {
-                const route = event.routes[0];
-                client.distanciaViagem = route.summary.totalDistance / 1000; // em km
-                client.tempoViagem = route.summary.totalTime / 60; // em minutos
+                newRoutingControl.on('routesfound', (event) => {
+                    const route = event.routes[0];
+                    client.distanciaViagem = route.summary.totalDistance / 1000; // em km
+                    client.tempoViagem = route.summary.totalTime / 60; // em minutos
 
-                console.log(`Rota encontrada para ${client.nome}`);
-                console.log('Distância (km):', client.distanciaViagem);
-                console.log('Tempo (min):', client.tempoViagem);
+                    console.log(`Rota encontrada para ${client.nome}`);
+                    console.log('Distância (km):', client.distanciaViagem);
+                    console.log('Tempo (min):', client.tempoViagem);
 
-                rotasCompletas.push(client);
-                rotasProcessadas++;
+                    rotasCompletas.push(client);
+                    rotasProcessadas++;
 
-                if (rotasProcessadas === listaDeClientes.length) {
-                    console.log('Todas as rotas foram processadas:', rotasCompletas);
-                    resolve(rotasCompletas);
-                }
-            });
+                    if (rotasProcessadas === listaDeClientes.length) {
+                        console.log('Todas as rotas foram processadas:', rotasCompletas);
+                        resolve(rotasCompletas);
+                    }
+                });
 
-            newRoutingControl.on('routingerror', (error) => {
-                console.error(`Erro ao calcular a rota para ${client.nome}:`, error);
-                reject(error);
-            });
+                newRoutingControl.on('routingerror', (error) => {
+                    console.error(`Erro ao calcular a rota para ${client.nome}:`, error);
+                    reject(error);
+                });
 
-            newRoutingControl.route();
+                newRoutingControl.route();
+            }, index * 1000); // Atraso de 1 segundo entre cada requisição
         });
     });
 }
+
 
 
   loadClients() {
